@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { calculateRevenueGap, formatCurrency, formatPercent, type DiagnosticInput, type DiagnosticResult } from '@/lib/calculations';
+import { calculateRevenueGap, formatCurrency, formatPercent, type DiagnosticoInput, type DiagnosticoOutput } from '@/lib/calculations';
 
 // Screen components (placeholder for now)
 function PreHeroScreen({ onNext }: { onNext: () => void }) {
@@ -65,9 +65,9 @@ function HeroScreen({ onNext }: { onNext: () => void }) {
   );
 }
 
-function CalculadoraScreen({ onNext, onInput }: { onNext: (input: DiagnosticInput) => void, onInput: (input: Partial<DiagnosticInput>) => void }) {
-  const [llamadas, setLlamadas] = useState(47);
-  const [ticket, setTicket] = useState(5000);
+function CalculadoraScreen({ onNext, onInput }: { onNext: (input: DiagnosticoInput) => void, onInput: (input: Partial<DiagnosticoInput>) => void }) {
+  const [leads, setLeads] = useState(42);
+  const [ticket, setTicket] = useState(6000);
   const [closingRate, setClosingRate] = useState(18);
   
   return (
@@ -80,18 +80,19 @@ function CalculadoraScreen({ onNext, onInput }: { onNext: (input: DiagnosticInpu
         {/* Pregunta 1 */}
         <div className="mb-10">
           <label className="block text-[var(--color-white)] font-semibold mb-4">
-            ¿Cuántas llamadas de venta hace tu equipo al mes?
+            ¿Cuántos leads calificados llegan a tu closer al mes?
           </label>
+          <p className="text-[var(--color-fog)] text-sm mb-4">(Los que realmente tienen una llamada agendada)</p>
           <input
             type="range"
-            min="10"
-            max="200"
-            value={llamadas}
-            onChange={(e) => { setLlamadas(Number(e.target.value)); onInput({ llamadas: Number(e.target.value) }); }}
+            min="5"
+            max="300"
+            value={leads}
+            onChange={(e) => { setLeads(Number(e.target.value)); onInput({ leads: Number(e.target.value) }); }}
             className="w-full h-2 bg-[var(--color-deep)] rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)]"
           />
           <div className="text-2xl font-bold text-[var(--color-accent)] mt-2 text-center">
-            {llamadas} llamadas/mes
+            {leads} leads/mes
           </div>
         </div>
         
@@ -117,29 +118,33 @@ function CalculadoraScreen({ onNext, onInput }: { onNext: (input: DiagnosticInpu
         {/* Pregunta 3 */}
         <div className="mb-10">
           <label className="block text-[var(--color-white)] font-semibold mb-4">
-            ¿Qué porcentaje de esas llamadas cierra tu equipo?
+            ¿Qué porcentaje de esos leads cierra tu equipo hoy?
           </label>
           <input
             type="range"
             min="5"
-            max="45"
+            max="50"
             value={closingRate}
-            onChange={(e) => { setClosingRate(Number(e.target.value)); onInput({ closingRate: Number(e.target.value) }); }}
+            onChange={(e) => { setClosingRate(Number(e.target.value)); onInput({ closingRate: Number(e.target.value) / 100 }); }}
             className="w-full h-2 bg-[var(--color-deep)] rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)]"
           />
           <div className="text-2xl font-bold text-[var(--color-accent)] mt-2 text-center">
             {closingRate}%
           </div>
           <p className="text-[var(--color-fog)] text-sm mt-2 text-center">
-            Benchmarks: Sin sistema: 11-18% | Con brief: 25-32% | Con sistema completo: 35-45%
+            📊 Benchmarks LatAm high-ticket (datos del mercado):
+            <br />
+            <span className="text-[var(--color-error)]">Sin sistema: 11%-18%</span> | 
+            <span className="text-[var(--color-warning)]">Con brief pre-llamada: 26%-32%</span> | 
+            <span className="text-[var(--color-success)]">Con sistema completo: 35%-45%</span>
           </p>
         </div>
         
         <button
-          onClick={() => onNext({ llamadas, ticket, closingRate })}
+          onClick={() => onNext({ leads, ticket, closingRate: closingRate / 100, closers: 'Solo yo' })}
           className="w-full px-8 py-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] text-white font-bold rounded-full text-lg hover:scale-105 transition-transform shadow-[var(--glow-blue)]"
         >
-          ANALIZAR MI SISTEMA →
+          CALCULAR MI DIAGNÓSTICO →
         </button>
         
         <p className="mt-6 text-[var(--color-fog)] text-xs text-center">
@@ -150,10 +155,11 @@ function CalculadoraScreen({ onNext, onInput }: { onNext: (input: DiagnosticInpu
   );
 }
 
-function GateScreen({ onNext }: { onNext: (data: { nombre: string, email: string, whatsapp: string }) => void }) {
+function GateScreen({ onNext }: { onNext: (data: { nombre: string, email: string, whatsapp: string, closers: string }) => void }) {
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
+  const [closers, setClosers] = useState('Solo yo');
   
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--color-void)] p-4">
@@ -189,10 +195,29 @@ function GateScreen({ onNext }: { onNext: (data: { nombre: string, email: string
             onChange={(e) => setWhatsapp(e.target.value)}
             className="w-full px-4 py-3 bg-[rgba(255,255,255,0.04)] border border-[rgba(0,212,255,0.15)] rounded-lg text-[var(--color-white)] focus:border-[rgba(0,102,255,0.60)] focus:shadow-[0_0_0_3px_rgba(0,102,255,0.15)] outline-none"
           />
+          <div>
+            <label className="block text-[var(--color-white)] font-semibold mb-2">Closers en tu equipo:</label>
+            <div className="grid grid-cols-4 gap-2">
+              {['Solo yo', '1 closer', '2-3', '4+'].map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => setClosers(option)}
+                  className={`px-2 py-2 text-sm rounded-lg transition-all ${
+                    closers === option
+                      ? 'bg-[var(--color-primary)] text-white font-semibold'
+                      : 'bg-[rgba(255,255,255,0.04)] text-[var(--color-mist)] hover:bg-[rgba(0,102,255,0.10)]'
+                  }`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
         
         <button
-          onClick={() => onNext({ nombre, email, whatsapp })}
+          onClick={() => onNext({ nombre, email, whatsapp, closers })}
           disabled={!nombre || !email}
           className="w-full mt-8 px-8 py-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] text-white font-bold rounded-full text-lg hover:scale-105 transition-transform shadow-[var(--glow-blue)] disabled:opacity-50 disabled:cursor-not-allowed"
         >
@@ -207,7 +232,7 @@ function GateScreen({ onNext }: { onNext: (data: { nombre: string, email: string
   );
 }
 
-function DiagnosticoScreen({ result }: { result: DiagnosticResult }) {
+function DiagnosticoScreen({ result, onNext }: { result: DiagnosticoOutput; onNext: () => void }) {
   return (
     <div className="min-h-screen bg-[var(--color-void)] p-4">
       <div className="max-w-4xl mx-auto py-8">
@@ -224,11 +249,11 @@ function DiagnosticoScreen({ result }: { result: DiagnosticResult }) {
           <div className="space-y-4 mb-8">
             <div className="flex justify-between">
               <span className="text-[var(--color-mist)]">Tu equipo cierra:</span>
-              <span className="font-bold text-[var(--color-white)]">{formatCurrency(result.dealsActuales * result.ticket)}</span>
+              <span className="font-bold text-[var(--color-white)]">{formatCurrency(result.revenueActual)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-[var(--color-mist)]">Tu equipo PODRÍA cerrar:</span>
-              <span className="font-bold text-[var(--color-white)]">{formatCurrency(result.dealsPotenciales * result.ticket)}</span>
+              <span className="font-bold text-[var(--color-white)]">{formatCurrency(result.revenuePotencial)}</span>
             </div>
             <div className="border-t border-[var(--color-ghost)] pt-4">
               <div className="flex justify-between items-center">
@@ -249,13 +274,13 @@ function DiagnosticoScreen({ result }: { result: DiagnosticResult }) {
             <div>
               <div className="flex justify-between mb-2">
                 <span className="text-[var(--color-mist)]">LEADS SIN CALIFICAR</span>
-                <span className="font-bold text-[var(--color-white)]">{formatPercent(result.pctNoCalificados)}</span>
+                <span className="font-bold text-[var(--color-white)]">{formatPercent(result.pctSinCalificar)}</span>
               </div>
               <p className="text-[var(--color-fog)] text-sm mb-2">
                 Tu closer recibe prospectos sin contexto y los primeros 8 minutos se van en descubrir si vale la pena hablar con ellos.
               </p>
               <div className="w-full bg-[var(--color-deep)] rounded-full h-3">
-                <div className="bg-[var(--color-primary)] h-3 rounded-full" style={{ width: `${result.pctNoCalificados * 100}%` }}></div>
+                <div className="bg-[var(--color-primary)] h-3 rounded-full" style={{ width: `${result.pctSinCalificar * 100}%` }}></div>
               </div>
             </div>
             
@@ -313,12 +338,32 @@ function DiagnosticoScreen({ result }: { result: DiagnosticResult }) {
             </p>
           </div>
         </div>
+        
+        <div className="mt-8 text-center">
+          <button
+            onClick={onNext}
+            className="px-10 py-5 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] text-white font-bold rounded-full text-xl hover:scale-105 transition-transform shadow-[var(--glow-blue)]"
+          >
+            VER EL BRIEF PRE-LLAMADA →
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
-function BriefPreviewScreen() {
+function BriefPreviewScreen({ brief }: { brief: any }) {
+  if (!brief) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--color-void)] p-4">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[var(--color-primary)] mx-auto mb-4"></div>
+          <p className="text-[var(--color-white)]">Generando brief con IA...</p>
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div className="min-h-screen bg-[var(--color-void)] p-4">
       <div className="max-w-4xl mx-auto py-8">
@@ -335,42 +380,37 @@ function BriefPreviewScreen() {
           </div>
           
           <div className="space-y-6">
-            <div>
-              <span className="text-[var(--color-mist)] block mb-1">PROSPECTO:</span>
-              <span className="text-[var(--color-white)] font-semibold">Carlos M. | 📞 En 15 minutos</span>
-            </div>
-            
             <div className="bg-[rgba(0,212,255,0.10)] border-l-4 border-[var(--color-accent)] p-4 rounded-r-lg">
-              <span className="text-[var(--color-accent)] font-bold block mb-2">🎯 PERFIL DETECTADO: RACIONAL INSEGURO</span>
+              <span className="text-[var(--color-accent)] font-bold block mb-2">🎯 {brief.perfil}</span>
               <span className="text-[var(--color-white)] block mb-2">QUÉ LO MUEVE:</span>
               <p className="text-[var(--color-mist)] text-sm">
-                Ha invertido antes y no obtuvo resultados. Hace muchas preguntas. No teme pagar — teme equivocarse.
+                {brief.queLoMueve}
               </p>
             </div>
             
             <div className="bg-[rgba(255,56,96,0.10)] border-l-4 border-[var(--color-error)] p-4 rounded-r-lg">
               <span className="text-[var(--color-error)] font-bold block mb-2">⚠️ ERROR A EVITAR:</span>
               <p className="text-[var(--color-white)] text-sm">
-                No uses emoción. Cada argumento emocional lo aleja más. Necesita lógica y estructura.
+                {brief.errorAEvitar}
               </p>
             </div>
             
             <div className="bg-[rgba(0,208,132,0.10)] border-l-4 border-[var(--color-success)] p-4 rounded-r-lg">
               <span className="text-[var(--color-success)] font-bold block mb-2">✅ ESTRATEGIA RECOMENDADA:</span>
               <p className="text-[var(--color-white)] text-sm">
-                Valida cada pregunta con calma. Pregunta: "¿Qué tendría que pasar para que te sientas seguro de avanzar?" Deja que él defina sus criterios de decisión.
+                {brief.estrategia}
               </p>
             </div>
             
             <div>
               <span className="text-[var(--color-mist)] block mb-1">🔒 CIERRE RECOMENDADO:</span>
-              <span className="text-[var(--color-white)]">Benjamin Franklin (pros vs contras en vivo) o Del 1 al 10 para medir temperatura.</span>
+              <span className="text-[var(--color-white)]">{brief.cierre}</span>
             </div>
             
             <div>
               <span className="text-[var(--color-mist)] block mb-1">📌 OBJECIÓN MÁS PROBABLE:</span>
-              <span className="text-[var(--color-white)]">"Déjame pensarlo"</span>
-              <p className="text-[var(--color-mist)] text-sm mt-1">→ Respuesta: "Claro. Antes de irnos, ¿qué es exactamente lo que tienes que pensar?"</p>
+              <span className="text-[var(--color-white)]">{brief.objecionProbable}</span>
+              <p className="text-[var(--color-mist)] text-sm mt-1">→ Respuesta: {brief.respuesta}</p>
             </div>
           </div>
         </div>
@@ -425,19 +465,44 @@ function CTAScreen({ revenuePerdido }: { revenuePerdido: number }) {
 // Main component
 export default function DiagnosticPage() {
   const [screen, setScreen] = useState(0);
-  const [input, setInput] = useState<Partial<DiagnosticInput>>({});
-  const [result, setResult] = useState<DiagnosticResult | null>(null);
+  const [input, setInput] = useState<Partial<DiagnosticoInput>>({});
+  const [result, setResult] = useState<DiagnosticoOutput | null>(null);
+  const [brief, setBrief] = useState<any>(null);
   
   const handleNext = () => setScreen(screen + 1);
   
-  const handleCalculadoraSubmit = (data: DiagnosticInput) => {
+  const handleCalculadoraSubmit = async (data: DiagnosticoInput) => {
     setInput(data);
     const calcResult = calculateRevenueGap(data);
     setResult(calcResult);
     handleNext();
   };
   
-  const handleGateSubmit = (data: { nombre: string, email: string, whatsapp: string }) => {
+  const handleDiagnosticoComplete = async () => {
+    if (result && input.closers) {
+      const fullInput: DiagnosticoInput = {
+        leads: input.leads || 42,
+        ticket: input.ticket || 6000,
+        closingRate: input.closingRate || 0.18,
+        closers: input.closers
+      };
+      
+      try {
+        const response = await fetch('/api/generate-brief', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ input: fullInput, output: result }),
+        });
+        const data = await response.json();
+        setBrief(data);
+      } catch (error) {
+        console.error('Error generating brief:', error);
+      }
+    }
+    handleNext();
+  };
+  
+  const handleGateSubmit = (data: { nombre: string, email: string, whatsapp: string, closers: string }) => {
     setInput({ ...input, ...data });
     // TODO: Send to API
     handleNext();
@@ -449,8 +514,8 @@ export default function DiagnosticPage() {
       {screen === 1 && <HeroScreen onNext={handleNext} />}
       {screen === 2 && <CalculadoraScreen onNext={handleCalculadoraSubmit} onInput={setInput} />}
       {screen === 3 && <GateScreen onNext={handleGateSubmit} />}
-      {screen === 4 && result && <DiagnosticoScreen result={result} />}
-      {screen === 5 && <BriefPreviewScreen />}
+      {screen === 4 && result && <DiagnosticoScreen result={result} onNext={handleDiagnosticoComplete} />}
+      {screen === 5 && <BriefPreviewScreen brief={brief} />}
       {screen === 6 && result && <CTAScreen revenuePerdido={result.revenuePerdido} />}
     </>
   );

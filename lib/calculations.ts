@@ -1,75 +1,101 @@
-export interface DiagnosticInput {
-  llamadas: number;
-  ticket: number;
-  closingRate: number;
-  closers?: string;
+import { BENCHMARKS } from './benchmarks'
+
+export interface DiagnosticoInput {
+  leads: number
+  ticket: number
+  closingRate: number      // 0-1
+  closers: string
 }
 
-export interface DiagnosticResult {
-  llamadas: number;
-  ticket: number;
-  closingRate: number;
-  dealsActuales: number;
-  dealsPotenciales: number;
-  dealsPerdidos: number;
-  revenuePerdido: number;
-  benchmark: number;
-  pctNoCalificados: number;
-  pctPerfilMismatch: number;
-  pctSinBrief: number;
-  horasPerdidas: number;
-  costoSistema: number;
-  roiMultiplier: number;
-  revenueRecuperable: number;
-}
+export interface DiagnosticoOutput {
+  // Revenue
+  revenueActual: number
+  revenuePotencial: number
+  revenuePerdido: number
+  revenueRecuperable: number  // conservador: 60% del gap
 
-export function calculateRevenueGap(input: DiagnosticInput): DiagnosticResult {
-  const { llamadas, ticket, closingRate, closers } = input;
-  const closingRateDecimal = closingRate / 100;
-  
-  // Benchmark dinámico basado en el closing rate actual
-  const benchmark = closingRateDecimal < 0.15 ? 0.28 :
-                    closingRateDecimal < 0.25 ? 0.32 :
-                    closingRateDecimal < 0.35 ? 0.38 : 0.42;
-  
-  // Cálculo central
-  const dealsActuales = llamadas * closingRateDecimal;
-  const dealsPotenciales = llamadas * benchmark;
-  const dealsPerdidos = dealsPotenciales - dealsActuales;
-  const revenuePerdido = dealsPerdidos * ticket;
-  
-  // Distribución del problema (dinámica según closing rate)
-  const pctNoCalificados = closingRateDecimal < 0.15 ? 0.45 :
-                           closingRateDecimal < 0.25 ? 0.38 : 0.28;
-  
-  const pctPerfilMismatch = 0.24; // constante — siempre presente
-  const pctSinBrief = 1 - pctNoCalificados - pctPerfilMismatch;
-  
-  // Tiempo perdido por el closer
-  const horasPerdidas = Math.round(dealsPerdidos * 0.5 * 13.5);
-  
+  // Deals
+  dealsActuales: number
+  dealsPotenciales: number
+  dealsPerdidos: number
+
+  // Tasa potencial (calculada, no pedida)
+  tasaPotencial: number
+
+  // Distribución del problema
+  pctSinCalificar: number
+  pctPerfilMismatch: number
+  pctSinBrief: number
+
+  // Problema principal (para personalizar el brief)
+  problemaPrincipal: 'calificacion' | 'mismatch' | 'brief'
+
+  // Tiempo
+  horasPerdidas: number
+
   // ROI del sistema
-  const costoSistema = 500; // retainer mensual
-  const roiMultiplier = Math.round(revenuePerdido / costoSistema);
-  const revenueRecuperable = Math.round(revenuePerdido * 0.6);
-  
+  costoSistema: number
+  roiMultiplier: number
+
+  // Perfil del Closing Cuántico asignado
+  perfilCQ: 'emocional' | 'racional' | 'critico' | 'decisor'
+}
+
+export function calculateRevenueGap(input: DiagnosticoInput): DiagnosticoOutput {
+  const { leads, ticket, closingRate, closers } = input
+
+  const tasaPotencial = BENCHMARKS.tasaPotencial(ticket, closingRate)
+  const dist = BENCHMARKS.distribucion(closingRate)
+
+  const dealsActuales = leads * closingRate
+  const dealsPotenciales = leads * tasaPotencial
+  const dealsPerdidos = dealsPotenciales - dealsActuales
+
+  const revenueActual = dealsActuales * ticket
+  const revenuePotencial = dealsPotenciales * ticket
+  const revenuePerdido = dealsPerdidos * ticket
+  const revenueRecuperable = Math.round(revenuePerdido * 0.60)
+
+  const horasPerdidas = BENCHMARKS.horasPerdidas(leads, closingRate)
+
+  const costoSistema = 500
+  const roiMultiplier = Math.round(revenueRecuperable / costoSistema)
+
+  // Problema principal = el de mayor porcentaje
+  const problemaPrincipal =
+    dist.sinCalificar >= dist.perfilMismatch && dist.sinCalificar >= dist.sinBrief
+      ? 'calificacion'
+      : dist.perfilMismatch >= dist.sinBrief
+        ? 'mismatch'
+        : 'brief'
+
+  // Perfil del Closing Cuántico asignado al lead
+  // (no al prospecto — al DUEÑO del negocio que hace el diagnóstico)
+  // Lógica: según combinación de ticket + closing rate + tamaño del equipo
+  const perfilCQ: DiagnosticoOutput['perfilCQ'] =
+    ticket > 10000 && closingRate < 0.20 ? 'racional' :  // ticket alto, cierra poco → analiza mucho, inseguro
+    closingRate < 0.15                   ? 'emocional' :  // cierra muy poco → impulsivo, sin sistema
+    closers === '4+'                      ? 'decisor'  :  // equipo grande → necesita consultar
+                                           'critico'      // closing rate medio → ya lo intentó antes
+
   return {
-    llamadas,
-    ticket,
-    closingRate: closingRateDecimal,
-    dealsActuales,
-    dealsPotenciales,
-    dealsPerdidos,
-    revenuePerdido,
-    benchmark,
-    pctNoCalificados,
-    pctPerfilMismatch,
-    pctSinBrief,
+    revenueActual: Math.round(revenueActual),
+    revenuePotencial: Math.round(revenuePotencial),
+    revenuePerdido: Math.round(revenuePerdido),
+    revenueRecuperable,
+    dealsActuales: Math.round(dealsActuales),
+    dealsPotenciales: Math.round(dealsPotenciales),
+    dealsPerdidos: Math.round(dealsPerdidos),
+    tasaPotencial,
+    pctSinCalificar: dist.sinCalificar,
+    pctPerfilMismatch: dist.perfilMismatch,
+    pctSinBrief: dist.sinBrief,
+    problemaPrincipal,
     horasPerdidas,
     costoSistema,
     roiMultiplier,
-    revenueRecuperable,
-  };
+    perfilCQ
+  }
 }
 
 export function formatCurrency(amount: number): string {
