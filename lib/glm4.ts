@@ -32,7 +32,7 @@ export async function generateBrief(request: GenerateBriefRequest): Promise<Gene
         'Authorization': `Bearer ${DASHSCOPE_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'glm-4',
+        model: 'glm-4.5-air',
         messages: [
           {
             role: 'system',
