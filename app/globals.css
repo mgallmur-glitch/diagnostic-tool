@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  --color-void: #060610;
+  --color-deep: #0A0A1F;
+  --color-primary: #0066FF;
+  --color-primary-dark: #0040CC;
+  --color-primary-light: #3388FF;
+  --color-accent: #00D4FF;
+  --color-gold: #FFB800;
+  --color-gold-dark: #CC9200;
+  --color-white: #FFFFFF;
+  --color-mist: #B0C4D8;
+  --color-fog: #6B8299;
+  --color-ghost: #2A3A4A;
+  --color-success: #00D084;
+  --color-warning: #FFB800;
+  --color-error: #FF3860;
+  --color-info: #00D4FF;
+  
+  --color-light-bg: #FFFFFF;
+  --color-light-secondary: #F5F7FA;
+  --color-light-text: #1A1A2E;
+  --color-light-text-secondary: #4A5568;
+  
+  --font-display: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace, monospace;
+  
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 100px;
+  
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --glow-blue: 0 0 30px rgba(0, 102, 255, 0.40);
+  --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.30);
+  --glow-gold: 0 0 20px rgba(255, 184, 0, 0.25);
+}
+
+@theme inline {
+  --color-background: var(--color-void);
+  --color-foreground: var(--color-white);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-white);
+  font-family: var(--font-body);
+}
