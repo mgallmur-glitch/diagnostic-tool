@@ -450,7 +450,7 @@ export default function DiagnosticPage() {
       {screen === 2 && <CalculadoraScreen onNext={handleCalculadoraSubmit} onInput={setInput} />}
       {screen === 3 && <GateScreen onNext={handleGateSubmit} />}
       {screen === 4 && result && <DiagnosticoScreen result={result} />}
-      {screen === 5 && <BriefPreviewScreen onNext={handleNext} />}
+      {screen === 5 && <BriefPreviewScreen />}
       {screen === 6 && result && <CTAScreen revenuePerdido={result.revenuePerdido} />}
     </>
   );
