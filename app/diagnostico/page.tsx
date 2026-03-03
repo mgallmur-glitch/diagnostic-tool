@@ -124,11 +124,11 @@ function PreHeroScreen({ onNext }: { onNext: () => void }) {
           <p className="text-xl sm:text-2xl text-[#B0C4D8] mb-4">
             <span className="text-gradient-premium font-bold text-3xl sm:text-4xl">
               <AnimatedNumber value={current.hours} />
-            </span> de esas horas fueron con leads que <span className="text-[#FF3860] font-bold">NUNCA</span> iban a comprar.
+            </span> de esas horas fueron con leads que <span className="text-[#FF3860] font-bold">NUNCA</span> fueron a comprar.
           </p>
           <div className="border-t border-[rgba(255,255,255,0.1)] pt-4">
             <p className="text-lg text-[#B0C4D8]">
-              Costo de esas horas: <span className="text-[#FF3860] font-bold text-2xl">${current.cost.toLocaleString()}</span> en comisiones pagadas al aire.
+              Costo de esas horas: <span className="text-[#FF3860] font-bold text-2xl">${current.cost.toLocaleString()}</span> en comisiones por filtrar manualmente.
             </p>
           </div>
         </div>
@@ -164,21 +164,21 @@ function HeroScreen({ onNext }: { onNext: () => void }) {
         </div>
         
         <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 leading-tight">
-          <span className="text-white">Tu closer no tiene problema de actitud.</span>
+          <span className="text-white">Tu closer improvisa porque no tiene información.</span>
           <br />
           <span className="bg-gradient-to-r from-[#60a5fa] via-[#3b82f6] to-[#8b5cf6] bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(59,130,246,0.3)]">
-            Tiene un problema de arquitectura.
+            No porque no sepa cerrar.
           </span>
         </h1>
         
         <p className="text-lg sm:text-xl text-[#B0C4D8] mb-4 max-w-2xl mx-auto leading-relaxed">
-          Cada semana, tu equipo improvisa en llamadas que ya debería saber cómo cerrar.
-          Calculamos el costo exacto de esa improvisación.
+          La IA filtra y prepara. Tu closer ejecuta. Sin el sistema, pierde 60% del tiempo con leads equivocados. 
+          Calculamos cuánto te cuesta esa falta de información.
         </p>
         
         <div className="bg-gradient-to-r from-[rgba(0,208,132,0.1)] to-[rgba(0,208,132,0.05)] border border-[rgba(0,208,132,0.2)] rounded-xl p-4 mb-8 max-w-lg mx-auto">
           <p className="text-[#00D084] text-sm">
-            💡 Insight: De cada 10 llamadas, tu equipo está perdiendo tiempo con 6 leads que filtraría un sistema de pre-cualificación.
+            💡 El sistema no cierra por ti. Te da inteligencia para que tu closer cierre más, si tiene la habilidad.
           </p>
         </div>
         
@@ -244,7 +244,7 @@ function CalculadoraScreen({ onNext, onInput }: {
               <p className="text-white font-bold text-lg sm:text-xl">{formatCurrency(resultado.actual)}</p>
             </div>
             <div>
-              <p className="text-[#6B8299] text-xs mb-1">Podrías cerrar</p>
+              <p className="text-[#6B8299] text-xs mb-1">Si tu closer ejecuta*</p>
               <p className="text-[#00D084] font-bold text-lg sm:text-xl">{formatCurrency(resultado.potencial)}</p>
             </div>
             <div>
@@ -263,13 +263,14 @@ function CalculadoraScreen({ onNext, onInput }: {
               <span className="text-xs text-white w-12 text-right">{closingRate}%</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-xs text-[#6B8299] w-16">Con sistema</span>
+              <span className="text-xs text-[#6B8299] w-16">Con info*</span>
               <div className="flex-1">
                 <ProgressBar value={0.35} color="green" />
               </div>
               <span className="text-xs text-[#00D084] w-12 text-right">35%</span>
             </div>
           </div>
+          <p className="text-[#6B8299] text-xs mt-2">*El sistema entrega información. Tu closer debe ejecutar. No garantizamos cierres.</p>
         </div>
         
         {/* SLIDERS */}
@@ -596,36 +597,40 @@ function DiagnosticoScreen({
         
         {/* COMPARATIVA DE ESCENARIOS */}
         <div className="bg-gradient-to-br from-[rgba(0,208,132,0.08)] to-[rgba(0,208,132,0.04)] backdrop-blur-xl border border-[rgba(0,208,132,0.15)] rounded-[24px] p-6 mb-6">
-          <h3 className="text-white font-bold mb-4">📈 Tu situación: Actual vs. Con Sistema</h3>
+          <h3 className="text-white font-bold mb-4">📈 El sistema no cierra por ti. Te da ventaja.</h3>
           
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-[rgba(0,0,0,0.2)] rounded-xl p-4 border border-[rgba(255,255,255,0.05)]">
-              <p className="text-[#6B8299] text-xs uppercase tracking-wider mb-2">Sin Sistema (Ahora)</p>
+              <p className="text-[#6B8299] text-xs uppercase tracking-wider mb-2">Sin información (Ahora)</p>
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between"><span className="text-[#B0C4D8]">Leads atendidos:</span> <span className="text-white">{escenarioActual.leads}/mes</span></div>
-                <div className="flex justify-between"><span className="text-[#B0C4D8]">Closing rate:</span> <span className="text-white">{formatPercent(escenarioActual.closingRate)}</span></div>
-                <div className="flex justify-between"><span className="text-[#B0C4D8]">Cierres:</span> <span className="text-white">{escenarioActual.cerrados}/mes</span></div>
+                <div className="flex justify-between"><span className="text-[#B0C4D8]">Leads sin calificar:</span> <span className="text-white">{escenarioActual.leads}/mes</span></div>
+                <div className="flex justify-between"><span className="text-[#B0C4D8]">Tiempo perdido:</span> <span className="text-white">60% promedio</span></div>
+                <div className="flex justify-between"><span className="text-[#B0C4D8]">Cierres actuales:</span> <span className="text-white">{escenarioActual.cerrados}/mes</span></div>
                 <div className="flex justify-between pt-2 border-t border-[rgba(255,255,255,0.1)]"><span className="text-[#B0C4D8]">Revenue:</span> <span className="text-white font-bold">{formatCurrency(escenarioActual.revenue)}</span></div>
               </div>
             </div>
             
             <div className="bg-gradient-to-br from-[rgba(0,208,132,0.15)] to-[rgba(0,208,132,0.05)] rounded-xl p-4 border border-[rgba(0,208,132,0.2)]">
-              <p className="text-[#00D084] text-xs uppercase tracking-wider mb-2">Con Sistema (Proyección)</p>
+              <p className="text-[#00D084] text-xs uppercase tracking-wider mb-2">Con inteligencia* (Proyección)</p>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between"><span className="text-[#B0C4D8]">Leads calificados:</span> <span className="text-white">{Math.round(escenarioConSistema.leads)}/mes</span></div>
-                <div className="flex justify-between"><span className="text-[#B0C4D8]">Closing rate:</span> <span className="text-[#00D084]">35%</span></div>
-                <div className="flex justify-between"><span className="text-[#B0C4D8]">Cierres:</span> <span className="text-[#00D084]">{escenarioConSistema.cerrados}/mes</span></div>
-                <div className="flex justify-between pt-2 border-t border-[rgba(0,208,132,0.2)]"><span className="text-[#B0C4D8]">Revenue:</span> <span className="text-[#00D084] font-bold">{formatCurrency(escenarioConSistema.revenue)}</span></div>
+                <div className="flex justify-between"><span className="text-[#B0C4D8]">Tiempo optimizado:</span> <span className="text-[#00D084]">100% en buenos leads</span></div>
+                <div className="flex justify-between"><span className="text-[#B0C4D8]">Si tu closer ejecuta:</span> <span className="text-[#00D084]">~{escenarioConSistema.cerrados}/mes</span></div>
+                <div className="flex justify-between pt-2 border-t border-[rgba(0,208,132,0.2)]"><span className="text-[#B0C4D8]">Revenue potencial:</span> <span className="text-[#00D084] font-bold">{formatCurrency(escenarioConSistema.revenue)}</span></div>
               </div>
             </div>
           </div>
           
           <div className="mt-4 text-center bg-[rgba(0,0,0,0.2)] rounded-lg p-3">
             <p className="text-white text-sm">
-              Diferencia: <span className="text-[#00D084] font-bold text-lg">{cierresAdicionales > 0 ? '+' : ''}{cierresAdicionales} cierres</span> más por mes
+              Diferencia potencial: <span className="text-[#00D084] font-bold text-lg">{cierresAdicionales > 0 ? '+' : ''}{cierresAdicionales} cierres</span> si tu closer ejecuta bien
               {cierresAdicionales > 0 && <span className="text-[#6B8299]"> (1 cierre adicional cada {Math.max(1, Math.round(30 / cierresAdicionales))} días)</span>}
             </p>
           </div>
+          
+          <p className="text-[#6B8299] text-xs mt-3 text-center">
+            *El sistema filtra y prepara. El cierre depende 100% de tu closer y su habilidad.
+          </p>
         </div>
         
         {/* INSIGHT OCULTO */}
@@ -637,11 +642,14 @@ function DiagnosticoScreen({
             Basado en tus números, tu closer está hablando con <span className="text-white font-bold">{leadsSinPotencial} leads/mes</span> que NO deberían estar en sus llamadas.
           </p>
           <p className="text-[#B0C4D8] text-sm mt-2 leading-relaxed">
-            Si los filtraras ANTES con un sistema de pre-cualificación, tu closer tendría tiempo para <span className="text-[#00D084] font-bold">{Math.round(leadsSinPotencial * 0.3)} llamadas más</span> con leads calificados.
+            Si los filtraras ANTES, tu closer tendría tiempo para <span className="text-[#00D084] font-bold">{Math.round(leadsSinPotencial * 0.3)} llamadas más</span> con leads calificados.
           </p>
           <div className="mt-3 pt-3 border-t border-[rgba(251,191,36,0.2)]">
             <p className="text-[#fbbf24] text-sm font-medium">
-              Revenue potencial adicional SOLO por filtrar: {formatCurrency(Math.round(leadsSinPotencial * 0.3 * 0.35 * input.ticket))}/mes
+              Ahorro en tiempo/comisiones: {formatCurrency(costoHorasPerdidas)}/mes
+            </p>
+            <p className="text-[#6B8299] text-xs mt-1">
+              El sistema te da tiempo e información. El cierre sigue dependiendo de tu closer.
             </p>
           </div>
         </div>
