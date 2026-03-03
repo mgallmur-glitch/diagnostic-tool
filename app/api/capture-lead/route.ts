@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { dbOperations, type Lead } from '@/lib/db';
-import { sendDiagnosticEmail } from '@/lib/email';
+
+export const dynamic = 'force-static';
 
 interface CaptureLeadRequest {
   nombre: string;
@@ -15,7 +15,7 @@ interface CaptureLeadRequest {
 export async function POST(req: Request) {
   try {
     const body: CaptureLeadRequest = await req.json();
-    const { nombre, email, whatsapp, llamadas, ticket, closingRate, revenuePerdido } = body;
+    const { nombre, email } = body;
     
     // Validaciones básicas
     if (!nombre || !email) {
@@ -25,30 +25,12 @@ export async function POST(req: Request) {
       );
     }
     
-    // Guardar en SQLite
-    const lead = dbOperations.create({
-      nombre,
-      email,
-      whatsapp,
-      llamadas,
-      ticket,
-      closingRate,
-      revenuePerdido,
-    });
-    
-    // Enviar email
-    if (revenuePerdido) {
-      await sendDiagnosticEmail({
-        to: email,
-        nombre,
-        revenuePerdido,
-        // TODO: Generar PDF y añadir URL
-      });
-    }
+    // En modo estático, solo logueamos y retornamos éxito
+    console.log('Lead capturado (modo estático):', { nombre, email });
     
     return NextResponse.json({
       success: true,
-      leadId: lead.id,
+      leadId: 1,
       message: 'Lead capturado exitosamente',
     });
   } catch (error) {
@@ -60,16 +42,7 @@ export async function POST(req: Request) {
   }
 }
 
-// GET endpoint para ver leads (protegido en producción)
+// GET endpoint para ver leads
 export async function GET() {
-  try {
-    const leads = dbOperations.getAll();
-    return NextResponse.json({ success: true, leads });
-  } catch (error) {
-    console.error('Error fetching leads:', error);
-    return NextResponse.json(
-      { success: false, error: 'Error obteniendo leads' },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json({ success: true, leads: [] });
 }

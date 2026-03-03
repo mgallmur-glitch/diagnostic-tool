@@ -1,23 +1,37 @@
 import Database from 'better-sqlite3';
 import path from 'path';
+import fs from 'fs';
 
-const dbPath = path.join(process.cwd(), 'data', 'leads.db');
-const db = new Database(dbPath);
+// Lazy initialization - only create DB when needed
+let db: Database.Database | null = null;
 
-// Initialize database
-db.exec(`
-  CREATE TABLE IF NOT EXISTS leads (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nombre TEXT NOT NULL,
-    email TEXT NOT NULL,
-    whatsapp TEXT,
-    llamadas INTEGER,
-    ticket INTEGER,
-    closingRate REAL,
-    revenuePerdido INTEGER,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-  )
-`);
+function getDb(): Database.Database {
+  if (!db) {
+    const dataDir = path.join(process.cwd(), 'data');
+    // Ensure data directory exists
+    if (!fs.existsSync(dataDir)) {
+      fs.mkdirSync(dataDir, { recursive: true });
+    }
+    const dbPath = path.join(dataDir, 'leads.db');
+    db = new Database(dbPath);
+    
+    // Initialize database
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS leads (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nombre TEXT NOT NULL,
+        email TEXT NOT NULL,
+        whatsapp TEXT,
+        llamadas INTEGER,
+        ticket INTEGER,
+        closingRate REAL,
+        revenuePerdido INTEGER,
+        fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+  }
+  return db;
+}
 
 export interface Lead {
   id?: number;
@@ -33,7 +47,8 @@ export interface Lead {
 
 export const dbOperations = {
   create: (lead: Omit<Lead, 'id' | 'fecha'>) => {
-    const stmt = db.prepare(`
+    const database = getDb();
+    const stmt = database.prepare(`
       INSERT INTO leads (nombre, email, whatsapp, llamadas, ticket, closingRate, revenuePerdido)
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `);
@@ -50,14 +65,16 @@ export const dbOperations = {
   },
   
   getAll: () => {
-    const stmt = db.prepare('SELECT * FROM leads ORDER BY fecha DESC');
+    const database = getDb();
+    const stmt = database.prepare('SELECT * FROM leads ORDER BY fecha DESC');
     return stmt.all() as Lead[];
   },
   
   getById: (id: number) => {
-    const stmt = db.prepare('SELECT * FROM leads WHERE id = ?');
+    const database = getDb();
+    const stmt = database.prepare('SELECT * FROM leads WHERE id = ?');
     return stmt.get(id) as Lead | undefined;
   },
 };
 
-export default db;
+export default getDb();

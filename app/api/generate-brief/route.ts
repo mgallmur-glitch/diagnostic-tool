@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
-import { generateBrief, type GenerateBriefRequest } from '@/lib/glm4';
+import { getMockBrief, type GenerateBriefRequest } from '@/lib/glm4';
+
+export const dynamic = 'force-static';
 
 export async function POST(req: Request) {
   try {
@@ -14,16 +16,8 @@ export async function POST(req: Request) {
       );
     }
     
-    // Validar campos requeridos en input
-    if (!input.leads || !input.ticket || !input.closingRate || !input.closers) {
-      return NextResponse.json(
-        { success: false, error: 'Todos los campos del input son requeridos' },
-        { status: 400 }
-      );
-    }
-    
-    // Generar brief usando GLM-4
-    const brief = await generateBrief({ input, output });
+    // En modo estático, usar mock brief
+    const brief = getMockBrief({ input, output });
     
     return NextResponse.json({ success: true, brief });
   } catch (error) {

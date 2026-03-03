@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { calculateRevenueGap, type DiagnosticoInput } from '@/lib/calculations';
 
+export const dynamic = 'force-static';
+
 export async function POST(req: Request) {
   try {
     const body: DiagnosticoInput = await req.json();

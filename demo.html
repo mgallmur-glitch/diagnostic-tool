@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Gap Diagnostic - Demo Visual</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+    
+    :root {
+      --primary: #0066FF;
+      --accent: #00D4FF;
+      --gold: #FFB800;
+      --bg-dark: #0A101A;
+      --bg-card: #1A2332;
+      --text-primary: #FFFFFF;
+      --text-secondary: #B0C4D8;
+      --glass-border: rgba(0, 212, 255, 0.25);
+      --glass-bg: rgba(26, 35, 50, 0.8);
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0A101A 0%, #1A2332 50%, #0A101A 100%);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+    
+    .font-display {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .glass-card {
+      background: var(--glass-bg);
+      border: 2px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+    }
+    
+    .glow-blue {
+      box-shadow: 0 0 40px rgba(0, 102, 255, 0.3);
+    }
+    
+    .glow-cyan {
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+    }
+    
+    .text-gradient {
+      background: linear-gradient(135deg, #0066FF 0%, #00D4FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .screen {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+  .screen.active {
+    display: block;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes countUp {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  .count-up {
+    animation: countUp 0.3s ease-out;
+  }
+  
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(0, 102, 255, 0.3);
+    outline: none;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0066FF 0%, #00D4FF 100%);
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+  }
+  
+  .btn-primary {
+    background: linear-gradient(135deg, #0066FF 0%, #0040CC 100%);
+    border: none;
+    color: white;
+    padding: 16px 40px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 102, 255, 0.4);
+  }
+  
+  .input-field {
+    background: rgba(0, 102, 255, 0.1);
+    border: 2px solid rgba(0, 212, 255, 0.25);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: white;
+    font-size: 16px;
+    outline: none;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+  
+  .input-field:focus {
+    border-color: #00D4FF;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="font-display text-3xl md:text-4xl font-bold text-gradient mb-2">
+        Sales Gap Diagnostic Tool
+      </h1>
+      <p class="text-sm text-gray-400">Demo Visual - Versión Estática</p>
+    </div>
+
+    <!-- Screen 0: Pre-Hero -->
+    <div id="screen-0" class="screen active">
+      <div class="glass-card p-12 text-center glow-cyan">
+        <h2 class="font-display text-2xl md:text-3xl font-bold mb-8 text-gray-300">
+          Calculando tu Revenue Gap...
+        </h2>
+        <div class="count-up">
+          <span id="counter" class="font-display text-6xl md:text-8xl font-bold text-gradient">
+            $0
+          </span>
+          <p class="text-gray-400 mt-4">perdidos cada mes</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 1: Hero -->
+    <div id="screen-1" class="screen">
+      <div class="glass-card p-12 text-center glow-blue">
+        <h2 class="font-display text-3xl md:text-5xl font-bold mb-6 leading-tight">
+          TU CLOSER NO TIENE UN PROBLEMA DE ACTITUD...
+        </h2>
+        <p class="text-2xl md:text-4xl font-bold text-gradient mb-8">
+          ...TIENE UN PROBLEMA DE PROCESO
+        </p>
+        <p class="text-lg md:text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+          Descubre cuánto dinero estás dejando en la mesa cada mes por ineficiencias en tu proceso de ventas.
+        </p>
+        <button onclick="nextScreen()" class="btn-primary text-lg">
+          CALCULAR MI REVENUE GAP →
+        </button>
+      </div>
+    </div>
+
+    <!-- Screen 2: Calculadora -->
+    <div id="screen-2" class="screen">
+      <div class="glass-card p-8 md:p-12 glow-blue">
+        <h2 class="font-display text-2xl md:text-3xl font-bold mb-8 text-center">
+          Ingresa tus métricas actuales
+        </h2>
+        
+        <!-- Slider 1 -->
+        <div class="mb-8">
+          <div class="flex justify-between items-center mb-3">
+            <label class="text-lg font-semibold">Llamadas por mes</label>
+            <span id="llamadas-value" class="font-display text-2xl font-bold text-accent">47</span>
+          </div>
+          <input type="range" id="llamadas" min="10" max="200" value="47" 
+                 class="w-full" oninput="updateSlider('llamadas')">
+        </div>
+        
+        <!-- Slider 2 -->
+        <div class="mb-8">
+          <div class="flex justify-between items-center mb-3">
+            <label class="text-lg font-semibold">Ticket promedio ($)</label>
+            <span id="ticket-value" class="font-display text-2xl font-bold text-accent">$5,000</span>
+          </div>
+          <input type="range" id="ticket" min="1000" max="50000" value="5000" step="500"
+                 class="w-full" oninput="updateSlider('ticket')">
+        </div>
+        
+        <!-- Slider 3 -->
+        <div class="mb-12">
+          <div class="flex justify-between items-center mb-3">
+            <label class="text-lg font-semibold">Closing rate (%)</label>
+            <span id="closing-value" class="font-display text-2xl font-bold text-accent">18%</span>
+          </div>
+          <input type="range" id="closing" min="5" max="45" value="18" step="1"
+                 class="w-full" oninput="updateSlider('closing')">
+        </div>
+        
+        <div class="text-center">
+          <button onclick="calculateAndNext()" class="btn-primary text-lg">
+            CALCULAR →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3: Gate -->
+    <div id="screen-3" class="screen">
+      <div class="glass-card p-8 md:p-12 glow-cyan">
+        <h2 class="font-display text-2xl md:text-3xl font-bold mb-4 text-center">
+          ¡Tienes un Revenue Gap de <span id="gap-display" class="text-gradient">$32,900/mes</span>!
+        </h2>
+        <p class="text-lg text-gray-300 text-center mb-8">
+          ¿Cuál es tu mejor email para enviarte el diagnóstico completo?
+        </p>
+        
+        <div class="space-y-4 max-w-md mx-auto">
+          <div>
+            <label class="text-sm font-semibold mb-2 block">Nombre</label>
+            <input type="text" placeholder="Tu nombre" class="input-field">
+          </div>
+          <div>
+            <label class="text-sm font-semibold mb-2 block">Email</label>
+            <input type="email" placeholder="tu@email.com" class="input-field">
+          </div>
+          <div>
+            <label class="text-sm font-semibold mb-2 block">WhatsApp (opcional)</label>
+            <input type="tel" placeholder="+52 55 1234 5678" class="input-field">
+          </div>
+        </div>
+        
+        <div class="text-center mt-8">
+          <button onclick="nextScreen()" class="btn-primary text-lg">
+            VER MI REVENUE GAP →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 4: Diagnóstico -->
+    <div id="screen-4" class="screen">
+      <div class="glass-card p-8 md:p-12 glow-blue">
+        <div class="text-center mb-8">
+          <h2 class="font-display text-2xl md:text-3xl font-bold mb-2">
+            🔴 REVENUE GAP DETECTADO
+          </h2>
+          <div class="font-display text-5xl md:text-7xl font-bold text-gradient mt-4">
+            $32,900/mes
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div class="bg-blue-900/30 border border-blue-500/30 rounded-lg p-4 text-center">
+            <div class="text-2xl font-bold text-accent">6.58</div>
+            <div class="text-sm text-gray-300">Deals perdidos/mes</div>
+          </div>
+          <div class="bg-blue-900/30 border border-blue-500/30 rounded-lg p-4 text-center">
+            <div class="text-2xl font-bold text-accent">44h</div>
+            <div class="text-sm text-gray-300">Horas perdidas</div>
+          </div>
+          <div class="bg-blue-900/30 border border-blue-500/30 rounded-lg p-4 text-center">
+            <div class="text-2xl font-bold text-accent">66x</div>
+            <div class="text-sm text-gray-300">ROI</div>
+          </div>
+          <div class="bg-blue-900/30 border border-blue-500/30 rounded-lg p-4 text-center">
+            <div class="text-2xl font-bold text-accent">$19,740</div>
+            <div class="text-sm text-gray-300">Recuperable</div>
+          </div>
+        </div>
+        
+        <div class="mb-8">
+          <h3 class="font-display text-lg font-bold mb-4">Distribución del problema:</h3>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span>Falta de entrenamiento</span>
+              <div class="flex-1 mx-4 bg-gray-700 rounded-full h-3">
+                <div class="bg-red-500 h-3 rounded-full" style="width: 40%"></div>
+              </div>
+              <span class="font-bold">40%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>Procesos ineficientes</span>
+              <div class="flex-1 mx-4 bg-gray-700 rounded-full h-3">
+                <div class="bg-yellow-500 h-3 rounded-full" style="width: 30%"></div>
+              </div>
+              <span class="font-bold">30%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>Sin sistema de seguimiento</span>
+              <div class="flex-1 mx-4 bg-gray-700 rounded-full h-3">
+                <div class="bg-orange-500 h-3 rounded-full" style="width: 20%"></div>
+              </div>
+              <span class="font-bold">20%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>Otras causas</span>
+              <div class="flex-1 mx-4 bg-gray-700 rounded-full h-3">
+                <div class="bg-blue-500 h-3 rounded-full" style="width: 10%"></div>
+              </div>
+              <span class="font-bold">10%</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center">
+          <button onclick="nextScreen()" class="btn-primary text-lg">
+            VER CÓMO ARREGLARLO →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 5: Brief -->
+    <div id="screen-5" class="screen">
+      <div class="glass-card p-8 md:p-12 glow-cyan">
+        <h2 class="font-display text-2xl md:text-3xl font-bold mb-6 text-center">
+          Brief Pre-Llamada Generado
+        </h2>
+        
+        <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-6 mb-6">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-2xl font-bold">
+              JP
+            </div>
+            <div>
+              <h3 class="font-display text-xl font-bold">Juan Pérez</h3>
+              <p class="text-gray-400">RACIONAL INSEGURO</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="space-y-4">
+          <div class="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+            <h4 class="font-bold text-accent mb-2">📝 Descripción</h4>
+            <p class="text-gray-300">Hace muchas preguntas, tiene miedo de equivocarse, ha tomado malas decisiones en el pasado.</p>
+          </div>
+          
+          <div class="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+            <h4 class="font-bold text-accent mb-2">🎯 Qué lo mueve</h4>
+            <p class="text-gray-300">La seguridad, la validación, la evidencia clara de que es la decisión correcta.</p>
+          </div>
+          
+          <div class="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+            <h4 class="font-bold text-red-400 mb-2">⚠️ Error a evitar</h4>
+            <p class="text-gray-300">No uses emoción. Cada argumento emocional lo aleja más.</p>
+          </div>
+          
+          <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+            <h4 class="font-bold text-blue-400 mb-2">💡 Estrategia</h4>
+            <p class="text-gray-300">Usa lógica y estructura. Valida cada pregunta con calma. "¿Qué tendría que pasar para que te sientas seguro?"</p>
+          </div>
+          
+          <div class="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+            <h4 class="font-bold text-green-400 mb-2">✅ Cierre recomendado</h4>
+            <p class="text-gray-300">Benjamin Franklin (pros vs contras) o Del 1 al 10</p>
+          </div>
+        </div>
+        
+        <div class="text-center mt-8">
+          <button onclick="nextScreen()" class="btn-primary text-lg">
+            AGENDAR LLAMADA →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 6: CTA -->
+    <div id="screen-6" class="screen">
+      <div class="glass-card p-8 md:p-12 text-center glow-blue">
+        <h2 class="font-display text-3xl md:text-4xl font-bold mb-6">
+          ¿Quieres arreglar este Revenue Gap en 7 días?
+        </h2>
+        <p class="text-lg md:text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+          Agenda una llamada gratuita de 30 minutos y descubre cómo implementar un sistema de closing que multiplique tu revenue.
+        </p>
+        
+        <div class="space-y-4 max-w-md mx-auto">
+          <button class="btn-primary w-full text-lg py-4">
+            AGENDAR LLAMADA GRATUITA →
+          </button>
+          <p class="text-sm text-gray-400">
+            Sin compromiso. Solo resultados.
+          </p>
+        </div>
+        
+        <div class="mt-12 pt-8 border-t border-gray-700">
+          <p class="text-gray-400 text-sm">
+            Mauricio Gallmur | The Closing Code AI<br>
+            Arquitecto de Sistemas de Closing IA
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="flex justify-center gap-4 mt-8">
+      <button onclick="prevScreen()" class="px-6 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition">
+        ← Anterior
+      </button>
+      <span class="text-gray-400 flex items-center">
+        Screen <span id="current-screen" class="font-bold mx-2">0</span> de 6
+      </span>
+      <button onclick="nextScreen()" class="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg transition">
+        Siguiente →
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let currentScreen = 0;
+    const totalScreens = 7;
+    
+    function showScreen(screenNum) {
+      for (let i = 0; i < totalScreens; i++) {
+        const screen = document.getElementById(`screen-${i}`);
+        if (screen) {
+          screen.classList.remove('active');
+        }
+      }
+      const activeScreen = document.getElementById(`screen-${screenNum}`);
+      if (activeScreen) {
+        activeScreen.classList.add('active');
+      }
+      document.getElementById('current-screen').textContent = screenNum;
+    }
+    
+    function nextScreen() {
+      if (currentScreen < totalScreens - 1) {
+        currentScreen++;
+        showScreen(currentScreen);
+      }
+    }
+    
+    function prevScreen() {
+      if (currentScreen > 0) {
+        currentScreen--;
+        showScreen(currentScreen);
+      }
+    }
+    
+    function updateSlider(type) {
+      const slider = document.getElementById(type);
+      const display = document.getElementById(`${type}-value`);
+      const value = parseInt(slider.value);
+      
+      if (type === 'ticket') {
+        display.textContent = `$${value.toLocaleString()}`;
+      } else if (type === 'closing') {
+        display.textContent = `${value}%`;
+      } else {
+        display.textContent = value;
+      }
+    }
+    
+    function calculateAndNext() {
+      // Simular cálculo
+      const llamadas = parseInt(document.getElementById('llamadas').value);
+      const ticket = parseInt(document.getElementById('ticket').value);
+      const closing = parseInt(document.getElementById('closing').value);
+      
+      // Cálculo simple de ejemplo
+      const gap = Math.round((llamadas * ticket * closing) / 100 * 0.7);
+      
+      document.getElementById('gap-display').textContent = `$${gap.toLocaleString()}/mes`;
+      nextScreen();
+    }
+    
+    // Contador animado en Screen 0
+    let counter = 0;
+    const counterElement = document.getElementById('counter');
+    const targetValue = 32900;
+    
+    function animateCounter() {
+      if (counter < targetValue) {
+        counter += Math.round(targetValue / 20);
+        if (counter > targetValue) counter = targetValue;
+        counterElement.textContent = `$${counter.toLocaleString()}`;
+        setTimeout(animateCounter, 100);
+      } else {
+        setTimeout(() => {
+          nextScreen();
+        }, 1500);
+      }
+    }
+    
+    // Iniciar contador al cargar
+    setTimeout(animateCounter, 500);
+  </script>
+</body>
+</html>

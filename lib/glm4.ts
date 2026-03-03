@@ -210,7 +210,7 @@ function parseBriefFromText(text: string): GeneratedBrief {
   return brief as GeneratedBrief
 }
 
-function getMockBrief(request: GenerateBriefRequest): GeneratedBrief {
+export function getMockBrief(request: GenerateBriefRequest): GeneratedBrief {
   const { output } = request
   const perfil = output.perfilCQ
   
