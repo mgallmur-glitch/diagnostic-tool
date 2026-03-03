@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getMockBrief, type GenerateBriefRequest } from '@/lib/glm4';
 
-export const dynamic = 'force-static';
+// export const dynamic = 'force-static';
 
 export async function POST(req: Request) {
   try {
