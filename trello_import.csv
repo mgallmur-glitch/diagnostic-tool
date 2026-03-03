@@ -1,0 +1,500 @@
+Board Name,List Name,Card Name,Description,Checklist Items,Labels,Due Date
+Instant Qualifier - Documentación Maestra,📚 READMEs y Documentos,README Principal,"Documento maestro de Instant Qualifier
+
+• Posicionamiento: Especialista en Pre-Cualificación de Leads con IA
+• ICP: Experto con equipo de ventas ($2K-$20K tickets)
+• Pricing: Setup $2K + $500-800/mes
+• Stack: Vapify + Vapi.ai + GHL
+• Metodología: The Closing Code Integration
+
+Ubicación: /README.md","","Referencia,Estrategia",
+Instant Qualifier - Documentación Maestra,📚 READMEs y Documentos,The Closing Code Integration,"Metodología completa de integración
+
+PILAR 1: Perfiles Adaptativos
+• Impulsivo Emocional vs Racional Evasivo
+• Detección en 15 segundos
+• Adaptación de guion en tiempo real
+
+PILAR 2: Manejo de Objeciones
+• No descalificar a la primera
+• Técnicas de re-enganche
+• 3 objeciones principales con respuestas
+
+PILAR 3: Brief Pre-Llamada
+• Template completo para closer
+• Perfil + Pain point + Estrategia
+• Ventaja táctica antes de llamar
+
+PILAR 4: Closing Coach AI
+• Análisis post-cierre
+• Reporte semanal
+• Upsell $200/mes
+
+Ubicación: /docs/THE_CLOSING_CODE_INTEGRATION.md","","Referencia,Metodología",
+Instant Qualifier - Documentación Maestra,📚 READMEs y Documentos,Setup Vapify - Guía Técnica,"Setup completo de cliente en 15 minutos
+
+PASO 1: Crear Sub-cuenta en Vapify (2 min)
+PASO 2: Configurar Assistant en Vapi (5 min)
+PASO 3: Configurar Teléfono
+PASO 4: Conectar GHL (3 min)
+PASO 5: Configurar Webhook de Retorno (3 min)
+PASO 6: Prueba End-to-End (5 min)
+
+Includes: System prompt completo con perfiles + objeciones
+Troubleshooting y escalado
+
+Ubicación: /docs/SETUP_VAPIFY.md","","Referencia,Técnico",
+Instant Qualifier - Documentación Maestra,📚 READMEs y Documentos,Jarvis Brief Maestro,"Documento completo para OpenClaw (Jarvis)
+
+CONTEXTO:
+• Empezando desde 0 (redes en 0, sin contactos)
+• OpenClaw: Gateway WhatsApp/Telegram/Discord para IA
+• Jarvis = Agent personal de productividad
+
+CATEGORÍAS DE TAREAS:
+1. Contenido (Diario) - Posts LinkedIn, Tweets, Threads
+2. Outreach (Semanal) - Identificar prospects, DMs
+3. Ventas (Cuando haya leads) - Discovery, propuestas
+4. Operaciones (Por cliente) - Reportes, optimización
+
+Includes: 4 prompts clave, KPIs, metas 90 días
+
+Ubicación: /docs/JARVIS_BRIEF_MAESTRO.md","","Referencia,Automatización",
+Instant Qualifier - Documentación Maestra,📝 Marketing y Copy,Estrategia de Marca,"ICP y estrategia de contenido
+
+ICP: El Experto con Equipo de Ventas
+• Factura $20K-$200K/mes
+• Tiene 1-3 closers
+• Usa GHL
+• Pain: closer quemado, 60% llamadas improductivas
+
+POSICIONAMIENTO:
+• Especialista en Pre-Cualificación de Leads con IA
+• NO: 'Vendo software'
+• SÍ: 'Implemento sistemas de pre-cualificación'
+
+PILARES DE CONTENIDO:
+• 30% Problema del experto
+• 40% Solución
+• 20% Estrategia de ventas
+• 10% Behind the scenes
+
+Ubicación: /marketing/ESTRATEGIA_MARCA.md","","Referencia,Marketing",
+Instant Qualifier - Documentación Maestra,📝 Marketing y Copy,Copy Persuasivo,"Copy completo para landing page
+
+SECCIONES:
+• Headline principal
+• Storytelling del problema
+• Revelación de la solución
+• Cómo funciona (4 pasos)
+• Resultados reales (3 testimonials)
+• Pricing (3 niveles)
+• 5 objeciones manejadas
+• FAQ completo
+
+Includes: Metodología The Closing Code en la narrativa
+
+Ubicación: /marketing/COPY_PERSUASIVO.md","","Referencia,Copy",
+Instant Qualifier - Documentación Maestra,📝 Marketing y Copy,Landing Page,"HTML completo - Glassmorphism design
+
+CARACTERÍSTICAS:
+• Diseño stark-blue glassmorphism
+• Fondo animado con gradientes
+• Mockup de llamada en vivo
+• Responsive (mobile/desktop)
+• Pricing cards
+• FAQ accordion
+• CTA buttons
+
+Ready for: Vercel/Netlify deploy
+Ubicación: /marketing/landing-page/index.html","","Referencia,Diseño",
+🎯 Metodología - The Closing Code,Perfil A: Impulsivo Emocional,Características,"Habla rápido
+Usa palabras: sentir, emocionado, urgente, necesito
+Toma decisiones basadas en emociones
+Quiere resultados inmediatos","","Metodología,Perfiles",
+🎯 Metodología - The Closing Code,Perfil A: Impulsivo Emocional,Estrategia de Cierre,"1. Validar emoción primero
+2. Conectar pain point con resultado emocional
+3. Cierre con compromiso emocional
+4. Ritmo: Rápido, energético, entusiasta
+
+Frase clave: 'Entiendo que esto es importante para ti...'","","Metodología,Perfiles",
+🎯 Metodología - The Closing Code,Perfil B: Racional Evasivo,Características,"Habla lento, pausado
+Usa palabras: pensar, analizar, opciones, considerar
+Necesita datos, lógica, evidencia
+Se protege de compromisos rápidos","","Metodología,Perfiles",
+🎯 Metodología - The Closing Code,Perfil B: Racional Evasivo,Estrategia de Cierre,"1. Establecer lógica primero
+2. Presentar datos específicos (ROI)
+3. Reducir fricción con garantías
+4. Ritmo: Lento, pausado, mesurado
+
+Frase clave: 'Para que esto sea productivo, necesito entender...'","","Metodología,Perfiles",
+🎯 Metodología - The Closing Code,Manejo de Objeciones,No tengo dinero,"Respuesta:
+'Entiendo. Cuando dices que no tienes presupuesto, ¿te refieres a que no puedes invertir nada ahora, o que necesitas ver el ROI primero para justificarlo?'
+
+→ 'No puedo invertir': Score -3
+→ 'Necesito ver ROI': Score +2","","Metodología,Objeciones",
+🎯 Metodología - The Closing Code,Manejo de Objeciones,Tengo que pensarlo,"Respuesta:
+'Claro, decisiones importantes requieren reflexión. ¿Hay algo específico que te genere duda, o es más sobre el timing?'
+
+→ Duda específica: Score +1
+→ Timing: Preguntar timeframe","","Metodología,Objeciones",
+🎯 Metodología - The Closing Code,Manejo de Objeciones,Necesito consultarlo,"Respuesta:
+'Perfecto, decisiones en pareja/familia son importantes. ¿Esa persona estará disponible durante la llamada con [EXPERTO] para que puedan decidir juntos?'
+
+→ Persona no estará: Score -2
+→ Sí/agendar conjunta: Score +1","","Metodología,Objeciones",
+🎯 Metodología - The Closing Code,Brief Pre-Llamada,Template Completo,"📋 BRIEF PRE-LLAMADA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Lead: [Nombre]
+Perfil detectado: [IMPULSIVO/RACIONAL]
+Pain point: [Extracto]
+Budget: [Rango confirmado]
+Decision maker: [Él/Ella + X/Solo]
+
+⚠️ RED FLAGS:
+- [Dato relevante]
+
+🎯 ESTRATEGIA RECOMENDADA:
+- [Basada en perfil]
+- [Técnica específica]","","Metodología,Brief",
+🎯 Metodología - The Closing Code,Closing Coach AI,Análisis Post-Cierre,"Comparar: Cualificación IA vs Resultado Real
+
+Detectar patrones:
+• IA dijo califica → No cerró (¿por qué?)
+• IA dijo no califica → Cerró (¿ajustar criterios?)
+
+Reporte semanal con:
+- Match IA vs Realidad (%)
+- Mismatches analizados
+- Fortalezas del equipo
+- Áreas de mejora
+- Recomendaciones","","Metodología,Coaching",
+🤖 Jarvis - Prompts Clave,Prompt 1,Generar Post LinkedIn,"Actúa como especialista en ventas B2B para mercado latinoamericano de infoproductos high-ticket.
+
+Genera post de LinkedIn:
+- Tipo: [Dolor/Solución/Estrategia/Behind]
+- Audiencia: Expertos/coaches con equipos $20K-200K/mes
+- Tono: Profesional, directo, autoridad pero accesible
+- Longitud: 150-250 palabras
+- Formato: Hook fuerte + valor/storytelling + CTA suave
+- Incluir: Números específicos, emojis, saltos de línea
+
+Tema: [DESCRIBIR]
+
+Posicionar como 'Especialista en Pre-Cualificación' sin sonar vende-humos.","","Jarvis,Prompt",
+🤖 Jarvis - Prompts Clave,Prompt 2,Analizar Prospect,"Analizar este perfil de LinkedIn: [LINK]
+
+Basado en últimos 10 posts, determinar:
+1. ¿Vende high-ticket? (¿cuánto?)
+2. ¿Menciona equipo/closer?
+3. ¿Usa GHL o menciona CRM?
+4. ¿País?
+5. ¿Problemas de ventas mencionados?
+6. Score 1-10 de fit para Instant Qualifier
+7. Nota personalizada para conexión (max 300 chars)","","Jarvis,Prompt",
+🤖 Jarvis - Prompts Clave,Prompt 3,Preparar Discovery Call,"Voy a tener discovery call con [Nombre] de [Empresa]
+
+Contexto:
+- Vende: [Producto]
+- Ticket: [$X]
+- Equipo: [X closers]
+- Problemas: [Si se conocen]
+
+Preparar:
+1. 5 preguntas de discovery específicas
+2. 3 posibles objeciones y respuestas
+3. 1 insight de valor para compartir
+4. Propuesta de pricing personalizada","","Jarvis,Prompt",
+🤖 Jarvis - Prompts Clave,Prompt 4,Reporte Semanal Cliente,"Generar reporte semanal para cliente [Nombre] con datos:
+
+Datos brutos:
+- Llamadas intentadas: X
+- Contactados: X
+- Calificados: X
+- No calificados: X
+- Duración promedio: X min
+- Score promedio: X/10
+
+Pain points más comunes: [Lista]
+Objeciones más frecuentes: [Lista]
+
+Crear email profesional con:
+1. Asunto atractivo
+2. Resumen ejecutivo
+3. Métricas clave con contexto
+4. 2-3 insights accionables
+5. Recomendación próxima semana","","Jarvis,Prompt",
+📅 Calendario Contenido - Semana 1,Lunes,Post Dolor LinkedIn,"Tema: 'Tu closer está quemado'
+Tipo: Storytelling del problema
+Objetivo: Engagement + conexión emocional
+CTA: Pregunta al final","","Contenido,LinkedIn",
+📅 Calendario Contenido - Semana 1,Martes,Caso Twitter/X,"Tema: 'De 11% a 42% closing rate'
+Tipo: Thread 5 tweets
+Objetivo: Proof + autoridad
+Hashtags: #Ventas #HighTicket","","Contenido,Twitter",
+📅 Calendario Contenido - Semana 1,Miércoles,Estrategia LinkedIn,"Tema: 'No contrates más closers todavía'
+Tipo: Contrarian + educación
+Objetivo: Posicionar como experto","","Contenido,LinkedIn",
+📅 Calendario Contenido - Semana 1,Jueves,Dolor Twitter/X,"Tema: '60% llamadas son pérdida de tiempo'
+Tipo: Datos duros + dolor agudo
+Objetivo: Viralidad potencial","","Contenido,Twitter",
+📅 Calendario Contenido - Semana 1,Viernes,Solución LinkedIn,"Tema: 'El sistema de pre-cualificación'
+Tipo: Presentación suave de solución
+Objetivo: Soft sell + valor","","Contenido,LinkedIn",
+📅 Calendario Contenido - Semana 1,Sábado,Behind Instagram,"Tema: 'Así configuré un sistema ayer'
+Tipo: Behind the scenes
+Formato: Reel o carousel","","Contenido,Instagram",
+📅 Calendario Contenido - Semana 1,Domingo,Estrategia Twitter/X,"Tema: '3 preguntas para cualificar leads'
+Tipo: Educational + valor
+Objetivo: Guardar/bookmark","","Contenido,Twitter",
+💰 Pricing y Paquetes,Nivel 1: Base,Setup + Retainer,"SETUP: $2,000 USD
+MENSUAL: $500/mes
+
+INCLUYE:
+• Setup completo sistema
+• Agente con metodología The Closing Code
+• Integración GHL nativa
+• Dashboard métricas
+• Soporte técnico
+• 250 llamadas/mes","","Pricing",
+💰 Pricing y Paquetes,Nivel 2: Pro + Brief,Setup + Retainer,"SETUP: $2,000 USD
+MENSUAL: $600/mes
+
+INCLUYE TODO NIVEL 1, MÁS:
+• Brief pre-llamada personalizado
+• Optimización mensual prompts
+• Reporte semanal insights
+• 250 llamadas/mes","","Pricing,Recomendado",
+💰 Pricing y Paquetes,Nivel 3: Pro + Coach,Setup + Retainer,"SETUP: $2,000 USD
+MENSUAL: $800/mes
+
+INCLUYE TODO NIVEL 2, MÁS:
+• Análisis post-cierre
+• Coaching semanal closer
+• Ajustes dinámicos criterios
+• 1 llamada mensual estrategia
+• 250 llamadas/mes","","Pricing,Upsell",
+💰 Pricing y Paquetes,Add-ons,Extras,"+$200/mes cada 250 llamadas extra
++$150/mes multi-closer
++$100/mes voice cloning del closer","","Pricing,Extras",
+🎯 Metas - Primeros 90 Días,Mes 1: Fundación,Objetivos,"[ ] Perfil LinkedIn optimizado
+[ ] 20 posts publicados
+[ ] 100 conexiones nuevas
+[ ] 50 DMs enviados
+[ ] 5 discovery calls
+[ ] 1 cliente cerrado
+
+INGRESOS OBJETIVO: $2,000 setup","","Metas,Mes 1",
+🎯 Metas - Primeros 90 Días,Mes 2: Validación,Objetivos,"[ ] 40 posts publicados (acum)
+[ ] 300 conexiones nuevas
+[ ] 10 discovery calls
+[ ] 2 clientes cerrados
+[ ] Primer case study documentado
+
+INGRESOS OBJETIVO: $4,000 setup + $500 MRR","","Metas,Mes 2",
+🎯 Metas - Primeros 90 Días,Mes 3: Escalada,Objetivos,"[ ] 60 posts publicados (acum)
+[ ] 500 conexiones nuevas
+[ ] 15 discovery calls
+[ ] 3-4 clientes cerrados
+[ ] Proceso onboarding documentado
+[ ] Considerar primer contractor
+
+INGRESOS OBJETIVO: $6,000 setup + $1,500 MRR","","Metas,Mes 3",
+📊 KPIs a Trackear,Marketing,Metricas,"• Posts publicados: 5/semana
+• Impresiones LinkedIn: >1,000/post
+• Engagement rate: >3%
+• Conexiones nuevas: 20/semana
+• DMs enviados: 10/semana
+• Discovery calls: 2-3/semana","","KPIs,Marketing",
+📊 KPIs a Trackear,Ventas,Metricas,"• Discovery calls realizadas: 2-3/semana
+• Propuestas enviadas: 2-3/semana
+• Closing rate: 20-30%
+• Clientes nuevos: 1-2/mes (mes 1-3)","","KPIs,Ventas",
+📊 KPIs a Trackear,Operaciones,Metricas,"• Tasa contacto: >70%
+• Tasa calificación: 40-60%
+• Satisfacción cliente: >8/10
+• Retención: >90% mensual","","KPIs,Operaciones",
+⚙️ Setup Técnico - Vapify,Paso 1,Crear Sub-cuenta,"1. Login dashboard.vapify.agency
+2. Click 'New Client'
+3. Completar:
+   - Client Name
+   - Email cliente
+   - Plan según volumen
+4. Guardar
+
+TIEMPO: 2 minutos","","Setup,Técnico",
+⚙️ Setup Técnico - Vapify,Paso 2,Configurar Assistant,"1. Ir a dashboard.vapi.ai
+2. Duplicar template 'María - Qualifier'
+3. Personalizar:
+   - Nombre experto
+   - Nombre closer
+   - Ticket programa
+4. Configurar Analysis Plan
+5. Copiar assistant_id
+
+TIEMPO: 5 minutos","","Setup,Técnico",
+⚙️ Setup Técnico - Vapify,Paso 3,Configurar Teléfono,"1. En Vapi: Phone Numbers → Buy Number
+2. Seleccionar país (MX, CO, etc.)
+3. Asignar número al assistant
+4. Copiar phone_number_id
+
+TIEMPO: 2 minutos","","Setup,Técnico",
+⚙️ Setup Técnico - Vapify,Paso 4,Conectar GHL,"1. En Vapify: Integrations → GoHighLevel
+2. Autorizar con credenciales cliente
+3. Configurar webhook:
+   - Trigger: 'Appointment Booked'
+   - URL: api.vapi.ai/call
+   - Payload con assistant_id y datos contacto
+
+TIEMPO: 3 minutos","","Setup,Técnico",
+⚙️ Setup Técnico - Vapify,Paso 5,Webhook Retorno,"1. En Vapi: Webhooks → Add Endpoint
+2. URL: tu-webhook.com/vapi-end
+3. Events: call.ended
+4. Action: Actualizar GHL (Make/Zapier)
+
+Mappear campos:
+- AI Qualified: qualified
+- AI Score: score
+- AI Summary: summary
+- Tags: AI-Calificado / AI-No-Califica
+
+TIEMPO: 3 minutos","","Setup,Técnico",
+⚙️ Setup Técnico - Vapify,Paso 6,Prueba,"1. Agendar cita prueba en GHL
+2. Esperar 60 segundos
+3. Contestar llamada María
+4. Responder preguntas
+5. Verificar GHL:
+   - Tags actualizados
+   - Campos llenos
+   - Cita cancelada si no calificaste
+
+TIEMPO: 5 minutos
+
+TOTAL SETUP: 20 minutos","","Setup,Técnico",
+🛠️ Herramientas Stack,Infraestructura,Vapify,"White-label de Vapi.ai
+COSTO: $29-149/mes
+FUNCIÓN: Dashboard clientes, rebilling, sub-cuentas
+LINK: vapify.agency","","Herramientas",
+🛠️ Herramientas Stack,Infraestructura,Vapi.ai,"Motor de voz AI
+COSTO: Consumo (~$0.15/min)
+FUNCIÓN: STT + LLM + TTS + telefonía
+LINK: dashboard.vapi.ai","","Herramientas",
+🛠️ Herramientas Stack,CRM,GoHighLevel,"CRM del cliente
+COSTO: Cliente paga
+FUNCIÓN: Webhooks, contactos, citas
+LINK: ghl.com","","Herramientas",
+🛠️ Herramientas Stack,Automatización,Make o Zapier,"Automatización webhooks
+COSTO: $9-16/mes
+FUNCIÓN: Brief pre-llamada, reportes
+LINK: make.com o zapier.com","","Herramientas",
+🛠️ Herramientas Stack,Scheduling,Calendly,"Agendar demos
+COSTO: Gratis-$10/mes
+FUNCIÓN: Discovery calls
+LINK: calendly.com","","Herramientas",
+🛠️ Herramientas Stack,Video,Loom,"Videos onboarding
+COSTO: Gratis
+FUNCIÓN: Tutoriales async
+LINK: loom.com","","Herramientas",
+🛠️ Herramientas Stack,Documentación,Notion,"Docs internas
+COSTO: Gratis
+FUNCIÓN: Procesos, SOPs
+LINK: notion.so","","Herramientas",
+🛠️ Herramientas Stack,Agente Personal,OpenClaw,"Gateway para Jarvis
+COSTO: Self-hosted (gratis)
+FUNCIÓN: WhatsApp/Telegram/Discord → IA
+LINK: openclaw.ai
+NOTA: Requiere Node 22+ y API key","","Herramientas",
+👥 ICP Detallado,Demográficos,Perfil,"• Edad: 28-45 años
+• Ubicación: MX, CO, AR, CL, PE
+• Ingresos: $20K-$200K USD/mes
+• Idioma: Español nativo","","ICP",
+👥 ICP Detallado,Negocio,Características,"• Modelo: Infoproductos, mentoría, consultoría
+• Ticket: $2K-$20K USD
+• Equipo: 1-3 closers
+• Agenda: 20-40 llamadas/semana
+• Stack: GoHighLevel","","ICP",
+👥 ICP Detallado,Psicográfico,Miedos,"1. 'Mi closer se está quemando y va a renunciar'
+2. 'Pago $3K/mes y 60% llamadas con gente que no compra'
+3. 'Mi equipo de ventas no rinde lo que debería'
+4. 'Cada vez que pierdo closer, pierdo ventas 2-3 semanas'
+5. 'Mis closers dicen que calidad de leads empeoró'","","ICP",
+👥 ICP Detallado,Psicográfico,Deseos,"1. Proteger closers de llamadas improductivas
+2. Aumentar closing rate 15% → 30%+
+3. Escalar equipo sin quemar a nadie
+4. Reducir CAC
+5. Tener datos de por qué leads no compran","","ICP",
+👥 ICP Detallado,Psicográfico,Lenguaje,"• 'Mi closer'
+• 'Mi equipo de ventas'
+• 'Proteger tiempo de ventas'
+• 'Optimizar funnel'
+• 'Calidad de lead'","","ICP",
+⚡ Día 1 - Acciones Inmediatas,Setup,Configurar Vapify,"[ ] Crear cuenta Vapify ($29/mes)
+[ ] Crear cuenta Vapi.ai
+[ ] Configurar primer assistant 'María'
+[ ] Comprar número teléfono","","Acción,Día 1",
+⚡ Día 1 - Acciones Inmediatas,Marketing,Preparar Landing,"[ ] Abrir index.html
+[ ] Reemplazar links Calendly
+[ ] Subir a Vercel/Netlify
+[ ] Probar en mobile/desktop","","Acción,Día 1",
+⚡ Día 1 - Acciones Inmediatas,Redes,Optimizar LinkedIn,"[ ] Actualizar bio con posicionamiento nuevo
+[ ] Crear banner simple (texto o Canva)
+[ ] Optimizar About section
+[ ] Agregar Featured section","","Acción,Día 1",
+⚡ Día 1 - Acciones Inmediatas,OpenClaw,Configurar Jarvis,"[ ] Instalar OpenClaw (Node 22+)
+[ ] Configurar con API key (Anthropic)
+[ ] Conectar WhatsApp/Telegram
+[ ] Cargar JARVIS_BRIEF_MAESTRO.md
+[ ] Probar primeros prompts","","Acción,Día 1",
+🎯 Narrativa de Ventas,Storytelling,The Closing Code,"HOOK:
+'Hace unos meses vendía un programa de coaching de ventas llamado The Closing Code a $1,000. Enseñaba a closers a detectar perfiles y manejar objeciones.
+
+PROBLEMA:
+Era 1-a-1, no escalable. Tuve un cliente, lo entrené, mejoró... pero no podía escalar eso.
+
+SOLUCIÓN:
+Me pregunté: ¿Y si pudiera codificar todo lo que enseñaba en un agente de IA?
+
+Eso es Instant Qualifier. No es 'una IA que llama'. Es un closer entrenado con metodología que vendía a $1k, ejecutándose 24/7 para tu equipo.'","","Ventas,Pitch",
+🎯 Narrativa de Ventas,Diferencial,vs Agencias IA,"OBJECIÓN: '¿Por qué tú y no otra agencia?'
+
+RESPUESTA:
+'Las agencias te venden tecnología. Te instalan un bot y listo.
+
+Yo te vendo metodología probada. The Closing Code no era teoría, era práctica de campo viendo qué hacen los mejores closers.
+
+Cuando tu lead habla con María, habla con un closer de $1k/hr que:
+• Detecta si es emocional o racional en 15 segundos
+• Maneja objeciones como un pro
+• Te prepara un brief antes de cada llamada
+
+Eso no lo tiene ninguna agencia de voz AI. Eso lo tiene alguien que ha estado del otro lado del teléfono cerrando ventas.'","","Ventas,Objeciones",
+📈 Proyección Financiera,Año 1,Conservador,"CLIENTES:
+• Q1: 2 clientes
+• Q2: 5 acumulados
+• Q3: 7 acumulados  
+• Q4: 8 acumulados
+
+INGRESOS:
+• Setup: $16,000
+• Retainers: $21,000
+• Total: $37,000
+
+PROFIT: ~$32,000 (85% margen)","","Proyección",
+📈 Proyección Financiera,Año 2,Base,"CLIENTES:
+• Inicio: 8
+• Nuevos: 15
+• Churn: 38%
+• Fin: 14
+
+INGRESOS: ~$100,000
+PROFIT: ~$60,000
+
+TEAM: 1 empleado","","Proyección",
+📈 Proyección Financiera,Año 3,Crecimiento,"CLIENTES: 25
+MRR: $12,500
+INGRESOS: $180,000
+
+TEAM: 3 personas
+PROFIT: ~$40,000 (reinversión en crecimiento)
+
+NOTA: Año 4 es donde escala fuerte","","Proyección",

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service — The Closing Code AI</title>
+    <meta name="description" content="Terms of Service and Refund Policy for The Closing Code AI">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#060610',
+                        primary: '#0066FF',
+                        cyan: '#00D4FF',
+                        gold: '#FFB800',
+                        mist: '#A0A3BD',
+                        deep: '#0A0A1A'
+                    },
+                    fontFamily: {
+                        'space': ['Space Grotesk', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --color-void: #060610;
+            --color-primary: #0066FF;
+            --color-cyan: #00D4FF;
+            --color-gold: '#FFB800';
+            --color-mist: #A0A3BD;
+        }
+        
+        *::before, *::after { box-sizing: border-box; }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-void);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6, p { margin: 0; }
+        a { text-decoration: none; color: inherit; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+        }
+        
+        .glass-navbar {
+            background: rgba(6, 6, 16, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-cyan) 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 102, 255, 0.4);
+        }
+        
+        section { padding: 80px 0; }
+        
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 102, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 102, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+        
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        th {
+            color: var(--color-cyan);
+            font-weight: 600;
+        }
+        
+        td {
+            color: #A0A3BD;
+        }
+        
+        .highlight-box {
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 3px solid var(--color-cyan);
+            padding: 16px 20px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        @media (max-width: 768px) {
+            section { padding: 60px 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-pattern"></div>
+    
+    <nav class="glass-navbar fixed w-full z-50 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-cyan flex items-center justify-center">
+                        <span class="font-mono font-bold text-white text-lg">CC</span>
+                    </div>
+                    <span class="font-space font-bold text-xl text-white">The Closing Code AI</span>
+                </a>
+                <a href="index.html#diagnostico" class="btn-primary text-sm">← Volver al sitio</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section class="pt-32 pb-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="glass-card p-8 lg:p-12">
+                <p class="text-cyan text-sm mb-4">Last updated / Última actualización: February 2026</p>
+                
+                <h1 class="font-space font-bold text-3xl lg:text-4xl text-white mb-8">Terms of Service & Refund Policy — The Closing Code AI</h1>
+                <p class="text-mist mb-8">theclosingcodeai.com/terms</p>
+                
+                <div class="space-y-8">
+                    <div>
+                        <h2 class="font-space font-semibold text-xl text-white mb-4">1. Agreement / Acuerdo</h2>
+                        <p class="text-mist">By purchasing a subscription or service from The Closing Code AI ("we", "us", "the Company"), you ("Client") agree to these Terms of Service. Please read them carefully before completing your purchase.</p>
+                        <div class="mt-4 text-mist">
+                            <p><strong>The Company:</strong></p>
+                            <p>The Closing Code AI — operated by Mauricio Gallmur</p>
+                            <p>hola@theclosingcodeai.com | theclosingcodeai.com</p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h2 class="font-space font-semibold text-xl text-white mb-4">2. Services / Servicios</h2>
+                        <p class="text-mist mb-4">The Closing Code AI provides the following digital software services delivered via a client portal:</p>
+                        
+                        <h3 class="font-space font-semibold text-lg text-cyan mb-2">2.1 Instant Qualifier (Fase 1)</h3>
+                        <ul class="space-y-2 text-mist mb-4 ml-4">
+                            <li>• AI voice agent that pre-qualifies inbound leads before sales calls</li>
+                            <li>• Delivered via integration with the client's GoHighLevel CRM</li>
+                            <li>• Includes: Brief Pre-Llamada automation, 4-profile detection (Closing Cuántico), weekly qualification report</li>
+                            <li>• Pricing: $2,000 one-time setup fee + $500/month subscription</li>
+                        </ul>
+                        
+                        <h3 class="font-space font-semibold text-lg text-cyan mb-2">2.2 AI Closer Coach (Fase 2)</h3>
+                        <ul class="space-y-2 text-mist mb-4 ml-4">
+                            <li>• Automated analysis of sales call recordings against the Closing Cuántico framework</li>
+                            <li>• Includes: Automatic transcription, weekly performance report, pattern detection</li>
+                            <li>• Pricing: $400/month (add-on to Fase 1)</li>
+                        </ul>
+                        
+                        <h3 class="font-space font-semibold text-lg text-cyan mb-2">2.3 AI Roleplay Simulator (Fase 3)</h3>
+                        <ul class="space-y-2 text-mist mb-4 ml-4">
+                            <li>• AI voice simulation of the 4 lead profiles for closer training</li>
+                            <li>• Includes: Automated session feedback, performance scoring, progress tracking</li>
+                            <li>• Pricing: $800–$2,000/month (B2B teams) | $97–$197/month (individual closers)</li>
+                        </ul>
+                        
+                        <h3 class="font-space font-semibold text-lg text-cyan mb-2">2.4 Bundle Fase 1+2</h3>
+                        <ul class="space-y-2 text-mist ml-4">
+                            <li>• Combined package with setup included</li>
+                            <li>• Pricing: $2,500 setup + $900/month</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h2 class="font-space font-semibold text-xl text-white mb-4">3. Billing & Payment / Facturación y Pago</h2>
+                        
+                        <p class="text-white font-semibold mb-2">3.1 Payment processing:</p>
+                        <p class="text-mist mb-4">All payments are processed by <strong>Lemon Squeezy</strong> as Merchant of Record. By purchasing, you also agree to Lemon Squeezy's Terms of Service.</p>
+                        
+                        <p class="text-white font-semibold mb-2">3.2 Subscription billing:</p>
+                        <p class="text-mist mb-4">Monthly subscriptions are billed automatically on the same date each month. You authorize recurring charges to your payment method.</p>
+                        
+                        <p class="text-white font-semibold mb-2">3.3 Setup fees:</p>
+                        <p class="text-mist mb-4">One-time setup fees are charged at the time of purchase and are non-refundable after onboarding has been completed (see Refund Policy, Section 5).</p>
+                        
+                        <p class="text-white font-semibold mb-2">3.4 Failed payments:</p>
+                        <p class="text-mist mb-4">If a payment fails, we will retry up to 3 times within 7 days. After 3 failed attempts, the service will be paused until payment is resolved.</p>
+                        
+                        <p class="text-white font-semibold mb-2">3.5 Price changes:</p>
+                        <p class="text-mist">We reserve the right to change pricing with 30 days advance notice to active subscribers. Price changes will not affect active subscriptions mid-billing cycle.</p>
+                    </div>
+                    
+                    <div>
+                        <h2 class="font-space font-semibold text-xl text-white mb-4">4. Service Delivery & SLA</h2>
+                        
+                        <p class="text-white font-semibold mb-2">4.1 What is included in every active subscription:</p>
+                        <ul class="space-y-2 text-mist mb-4 ml-4">
+                            <li>• AI qualification system active 24/7 with >99% uptime guarantee</li>
+                            <li>• Brief Pre-Llamada delivered automatically to the closer 15 minutes before each booked call (via GHL workflow)</li>
+                            <li>• Monthly report: leads contacted, qualification rate, profiles detected, average score</li>
+                            <li>• 1 prompt adjustment per month based on closer feedback</li>
+                            <li>• Support via Telegram during business hours (<4 hour response time, Monday–Friday)</li>
+                        </ul>
+                        
+                        <p class="text-white font-semibold mb-2">4.2 Onboarding timeline:</p>
+                        <ul class="space-y-2 text-mist mb-4 ml-4">
+                            <li>• Technical setup completed within 7 business days of purchase</li>
+                            <li>• Closer training session scheduled within the first 14 days</li>
+                            <li>• System live and operational within 21 days of purchase</li>
+                        </ul>
+                        
+                        <p class="text-white font-semibold mb-2">4.3 Client responsibilities:</p>
+                        <p class="text-mist mb-2">The client is responsible for:</p>
+                        <ul class="space-y-2 text-mist mb-4 ml-4">
+                            <li>• Providing a valid GoHighLevel account</li>
+                            <li>• Providing necessary API keys and integrations during onboarding</li>
+                            <li>• Ensuring their closer team participates in the onboarding training session</li>
+                            <li>• Providing call recordings (for Fase 2) in a supported format</li>
+                        </ul>
+                        
+                        <p class="text-white font-semibold mb-2">4.4 Limitations:</p>
+                        <p class="text-mist">Results depend on the client's existing sales process, lead quality, and closer team adoption. We do not guarantee specific closing rate increases beyond what is stated in the 30-day guarantee below.</p>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <h2 class="font-space font-semibold text-xl text-white mb-4">5. Refund Policy / Política de Reembolsos</h2>
+                        
+                        <h3 class="font-space font-semibold text-lg text-cyan mb-3">30-Day Performance Guarantee</h3>
+                        <p class="text-mist mb-4">We stand behind the results of our system. If your team's closing rate does not improve within the first 30 days of active use, we will refund your most recent monthly payment — no questions asked.</p>
+                        
+                        <p class="text-white font-semibold mb-2">To be eligible for the guarantee:</p>
+                        <ul class="space-y-2 text-mist mb-4 ml-4">
+                            <li>• The system must have been active and operational for the full 30 days</li>
+                            <li>• The closer team must have used the Brief Pre-Llamada for at least 80% of calls during the period</li>
+                            <li>• A minimum of 20 sales calls must have been completed during the 30-day period</li>
+                            <li>• The refund request must be submitted before day 35 via hola@theclosingcodeai.com</li>
+                        </ul>
+                        
+                        <p class="text-white font-semibold mb-2">What is NOT refundable:</p>
+                        <ul class="space-y-2 text-mist mb-4 ml-4">
+                            <li>• One-time setup fees ($2,000 / $2,500) after onboarding has been completed</li>
+                            <li>• Monthly payments beyond the 30-day guarantee window</li>
+                            <li>• Payments for months in which the client did not use the system actively</li>
+                            <li>• Payments after the client has already used the 30-day guarantee once</li>
+                        </ul>
+                        
+                        <p class="text-white font-semibold mb-2">How to request a refund:</p>
+                        <p class="text-mist">Email hola@theclosingcodeai.com with subject line: "Refund Request — [Your Company Name]"</p>
+                        <p class="text-mist">Include: your account email, date of purchase, and a brief description.</p>
+                        <p class="text-mist">We will process eligible refunds within 10 business days.</p>
+                    </div>
+                    
+                    <div>
+                        <h2 class="font-space font-semibold text-xl text-white mb-4">6. Cancellation / Cancelación</h2>
+                        
+                        <p class="text-white font-semibold mb-2">6.1 How to cancel:</p>
+                        <p class="text-mist mb-2">You may cancel your subscription at any time by:</p>
+                        <ul class="space-y-2 text-mist mb-4 ml-4">
+                            <li>• Emailing hola@theclosingcodeai.com, OR</li>
+                            <li>• Managing your subscription directly in your Lemon Squeezy customer portal</li>
+                        </ul>
+                        
+                        <p class="text-white font-semibold mb-2">6.2 Effect of cancellation:</p>
+                        <ul class="space-y-2 text-mist ml-4">
+                            <li>• Your service remains active until the end of the current billing period</li>
+                            <li>• No partial refunds for unused days within a billing period</li>
+                            <li>• Client data is retained for 90 days post-cancellation, then permanently deleted</li>
+                            <li>• After cancellation, setup fees are not recoverable if you re-subscribe in the future</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h2 class="font-space font-semibold text-xl text-white mb-4">7. Intellectual Property / Propiedad Intelectual</h2>
+                        
+                        <p class="text-white font-semibold mb-2">7.1 Our IP:</p>
+                        <p class="text-mist mb-4">The Closing Cuántico methodology, all AI prompts, system architecture, reports, frameworks, and The Closing Code AI brand are the exclusive intellectual property of Mauricio Gallmur / The Closing Code AI. Clients may not copy, reproduce, reverse-engineer, or resell any part of the methodology or system.</p>
+                        
+                        <p class="text-white font-semibold mb-2">7.2 Client IP:</p>
+                        <p class="text-mist">Sales call recordings, CRM data, and lead information provided by the client remain the exclusive property of the client. We will never share, sell, or use this data for purposes other than delivering the subscribed service.</p>
+                    </div>
+                    
+                    <div>
+                        <h2 class="font-space font-semibold text-xl text-white mb-4">8. Confidentiality / Confidencialidad</h2>
+                        <p class="text-mist">Both parties agree to maintain confidentiality regarding:</p>
+                        <ul class="space-y-2 text-mist mt-4 ml-4">
+                            <li>• Business strategies and sales processes shared during onboarding</li>
+                            <li>• Call recordings and closer performance data</li>
+                            <li>• Pricing and commercial terms of the agreement</li>
+                        </ul>
+                        <p class="text-mist mt-4">This confidentiality obligation survives termination of the service.</p>
+                    </div>
+                    
+                    <div>
+                        <h2 class="font-space font-semibold text-xl text-white mb-4">9. Limitation of Liability / Limitación de Responsabilidad</h2>
+                        <p class="text-mist">The Closing Code AI provides software tools and AI-assisted analysis. We are not responsible for:</p>
+                        <ul class="space-y-2 text-mist mt-4 ml-4">
+                            <li>• Final sales outcomes or revenue results beyond the 30-day guarantee</li>
+                            <li>• Decisions made by the client's sales team based on AI-generated recommendations</li>
+                            <li>• Technical failures of third-party providers (Vapi, GHL, ElevenLabs, etc.)</li>
+                            <li>• Data loss caused by the client's own CRM or infrastructure</li>
+                        </ul>
+                        <p class="text-mist mt-4">Our maximum liability in any case is limited to the total amount paid by the client in the 3 months preceding the claim.</p>
+                    </div>
+                    
+                    <div>
+                        <h2 class="font-space font-semibold text-xl text-white mb-4">10. Governing Law / Ley Aplicable</h2>
+                        <p class="text-mist">These Terms are governed by the laws of Peru. Any disputes shall first be attempted to be resolved amicably within 30 days. If unresolved, disputes shall be submitted to the competent courts of Lima, Peru.</p>
+                        <p class="text-mist mt-4">For international clients, both parties agree that disputes may alternatively be resolved via binding arbitration under the ICC Rules.</p>
+                    </div>
+                    
+                    <div>
+                        <h2 class="font-space font-semibold text-xl text-white mb-4">11. Changes to These Terms</h2>
+                        <p class="text-mist">We reserve the right to update these Terms with 30 days advance notice to active clients via email. Continued use of the service after the notice period constitutes acceptance of the updated Terms.</p>
+                    </div>
+                    
+                    <div>
+                        <h2 class="font-space font-semibold text-xl text-white mb-4">12. Contact / Contacto</h2>
+                        <div class="text-mist space-y-2">
+                            <p><strong>The Closing Code AI</strong></p>
+                            <p>Mauricio Gallmur</p>
+                            <p>hola@theclosingcodeai.com</p>
+                            <p>https://theclosingcodeai.com</p>
+                            <p>Lima, Peru</p>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-white/10 pt-8 mt-8">
+                        <p class="text-mist text-sm italic">These Terms of Service and Privacy Policy were last updated February 2026.</p>
+                        <p class="text-mist text-sm italic mt-2">For approval verification purposes: The Closing Code AI is a B2B SaaS platform delivering digital software services via subscription. All products are delivered digitally. No physical goods. Payment processing by Lemon Squeezy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="border-t border-white/5 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-mist text-sm">© 2026 The Closing Code AI. Todos los derechos reservados.</p>
+                <div class="flex gap-6">
+                    <a href="privacy.html" class="text-mist text-sm hover:text-cyan">Privacy Policy</a>
+                    <a href="terms.html" class="text-cyan text-sm">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
