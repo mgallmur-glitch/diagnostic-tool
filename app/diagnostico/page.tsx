@@ -1081,7 +1081,7 @@ export default function DiagnosticPage() {
       )}
       {screen === 5 && result && input && (
         <DiagnosticoScreen 
-          result={result} 
+          resultado={result} 
           input={input as DiagnosticoInput}
           onNext={handleVerBrief}
         />
