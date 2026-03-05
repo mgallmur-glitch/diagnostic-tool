@@ -164,17 +164,31 @@ async function enviarWhatsAppMaria({
   const revenueConSistema = formatUSD(revenueConSistemaNum)
   const gap = formatUSD(gapNum)
 
-  // Payload exacto según especificación de OpenClaw
+  // Mensaje con datos del diagnóstico para María (formato que funciona)
+  const mensaje = `
+Lead nuevo en el diagnóstico:
+- Nombre: ${nombre}
+- Leads al mes: ${leads}
+- Ticket promedio: ${ticket}
+- Closing rate actual: ${Math.round(closingRate * 100)}%
+- Closers en equipo: ${closers}
+- Revenue actual: ${revenueActual}
+- Revenue con sistema (35%): ${revenueConSistema}
+- Revenue Gap: ${gap}/mes
+- WhatsApp: ${numeroFinal}
+
+Salúdalo por su nombre, confirma su Revenue Gap exacto, y según su tamaño de equipo (${closers}) envíale el insight personalizado con el CTA a Calendly.
+  `.trim()
+
+  // Payload con routing + mensaje (formato que funciona)
   const payload = {
-    nombre,
-    leads,
-    ticket,
-    closingRate: Math.round(closingRate * 100),
-    closers,
-    revenueActual,
-    revenueConSistema,
-    gap,
-    phone: numeroFinal,
+    message: mensaje,
+    agentId: "maria",
+    deliver: true,
+    channel: "whatsapp",
+    to: numeroFinal,
+    wakeMode: "now",
+    timeoutSeconds: 60
   }
 
   console.log('Enviando payload a OpenClaw:', JSON.stringify(payload, null, 2))
