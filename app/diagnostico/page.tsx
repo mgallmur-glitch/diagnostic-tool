@@ -415,7 +415,7 @@ function GateScreen({ onNext, resultado }: {
           </div>
           
           <div>
-            <label className="text-[#B0C4D8] text-xs mb-1 block">WhatsApp (para enviarte el PDF)</label>
+            <label className="text-[#B0C4D8] text-xs mb-1 block">WhatsApp</label>
             <input
               type="tel"
               placeholder="+52 55 1234 5678"
@@ -423,7 +423,6 @@ function GateScreen({ onNext, resultado }: {
               onChange={(e) => setWhatsapp(e.target.value)}
               className="w-full px-4 py-3 bg-[rgba(255,255,255,0.04)] border border-[rgba(0,212,255,0.2)] rounded-xl text-white placeholder-[#6B8299] focus:border-[#3b82f6] focus:shadow-[0_0_0_3px_rgba(59,130,246,0.2)] outline-none transition-all"
             />
-            <p className="text-[#6B8299] text-xs mt-1">Preferido para equipos en LatAm</p>
           </div>
           
           <div>
