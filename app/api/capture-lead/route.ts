@@ -155,23 +155,33 @@ async function enviarWhatsAppMaria({
   const revenueActualNum = Math.round(leads * ticket * closingRate)
   const revenueConSistemaNum = Math.round(leads * ticket * 0.35)
   
+  // FIX: Gap nunca negativo (si closing rate > 35%, gap = 0)
+  const gapNum = Math.max(0, revenueConSistemaNum - revenueActualNum)
+  
   // Formatear a USD
   const formatUSD = (num: number) => `$${num.toLocaleString('en-US')}`
   const revenueActual = formatUSD(revenueActualNum)
   const revenueConSistema = formatUSD(revenueConSistemaNum)
-  const gap = formatUSD(revenuePerdido)
+  const gap = formatUSD(gapNum)
 
-  // Payload exacto que espera el webhook de María/OpenClaw
+  // FIX: Payload completo con campos de routing + datos del diagnóstico
   const payload = {
+    // Campos de routing (requeridos por OpenClaw)
+    agentId: 'maria',
+    deliver: true,
+    channel: 'whatsapp',
+    to: numeroFinal,  // FIX: 'to' no 'phone'
+    wakeMode: 'now',
+    timeoutSeconds: 60,
+    // Datos del diagnóstico para el mensaje
     nombre,
     leads,
     ticket,
-    closingRate: Math.round(closingRate * 100), // Convertir a porcentaje (18% no 0.18)
+    closingRate: Math.round(closingRate * 100),
     closers,
     revenueActual,
     revenueConSistema,
     gap,
-    phone: numeroFinal,
   }
 
   console.log('Enviando payload a OpenClaw:', JSON.stringify(payload, null, 2))
