@@ -348,21 +348,91 @@ function CalculadoraScreen({ onNext, onInput }: {
 // SCREEN 4: GATE UNIFICADO (Email + Datos en un paso)
 // ============================================
 
+const countryCodes = [
+  { code: '+1', flag: '🇺🇸', name: 'USA/Canadá', country: 'US' },
+  { code: '+52', flag: '🇲🇽', name: 'México', country: 'MX' },
+  { code: '+51', flag: '🇵🇪', name: 'Perú', country: 'PE' },
+  { code: '+54', flag: '🇦🇷', name: 'Argentina', country: 'AR' },
+  { code: '+55', flag: '🇧🇷', name: 'Brasil', country: 'BR' },
+  { code: '+56', flag: '🇨🇱', name: 'Chile', country: 'CL' },
+  { code: '+57', flag: '🇨🇴', name: 'Colombia', country: 'CO' },
+  { code: '+58', flag: '🇻🇪', name: 'Venezuela', country: 'VE' },
+  { code: '+34', flag: '🇪🇸', name: 'España', country: 'ES' },
+  { code: '+44', flag: '🇬🇧', name: 'Reino Unido', country: 'GB' },
+  { code: '+33', flag: '🇫🇷', name: 'Francia', country: 'FR' },
+  { code: '+49', flag: '🇩🇪', name: 'Alemania', country: 'DE' },
+  { code: '+39', flag: '🇮🇹', name: 'Italia', country: 'IT' },
+  { code: '+351', flag: '🇵🇹', name: 'Portugal', country: 'PT' },
+  { code: '+61', flag: '🇦🇺', name: 'Australia', country: 'AU' },
+  { code: '+86', flag: '🇨🇳', name: 'China', country: 'CN' },
+  { code: '+91', flag: '🇮🇳', name: 'India', country: 'IN' },
+  { code: '+81', flag: '🇯🇵', name: 'Japón', country: 'JP' },
+  { code: '+7', flag: '🇷🇺', name: 'Rusia', country: 'RU' },
+  { code: '+27', flag: '🇿🇦', name: 'Sudáfrica', country: 'ZA' },
+  { code: '+90', flag: '🇹🇷', name: 'Turquía', country: 'TR' },
+  { code: '+971', flag: '🇦🇪', name: 'Emiratos Árabes', country: 'AE' },
+  { code: '+54', flag: '🇦🇷', name: 'Argentina', country: 'AR' },
+  { code: '+593', flag: '🇪🇨', name: 'Ecuador', country: 'EC' },
+  { code: '+595', flag: '🇵🇾', name: 'Paraguay', country: 'PY' },
+  { code: '+598', flag: '🇺🇾', name: 'Uruguay', country: 'UY' },
+  { code: '+591', flag: '🇧🇴', name: 'Bolivia', country: 'BO' },
+  { code: '+506', flag: '🇨🇷', name: 'Costa Rica', country: 'CR' },
+  { code: '+507', flag: '🇵🇦', name: 'Panamá', country: 'PA' },
+  { code: '+503', flag: '🇸🇻', name: 'El Salvador', country: 'SV' },
+  { code: '+502', flag: '🇬🇹', name: 'Guatemala', country: 'GT' },
+  { code: '+504', flag: '🇭🇳', name: 'Honduras', country: 'HN' },
+  { code: '+505', flag: '🇳🇮', name: 'Nicaragua', country: 'NI' },
+  { code: '+1809', flag: '🇩🇴', name: 'Rep. Dominicana', country: 'DO' },
+  { code: '+53', flag: '🇨🇺', name: 'Cuba', country: 'CU' },
+  { code: '+212', flag: '🇲🇦', name: 'Marruecos', country: 'MA' },
+  { code: '+20', flag: '🇪🇬', name: 'Egipto', country: 'EG' },
+  { code: '+234', flag: '🇳🇬', name: 'Nigeria', country: 'NG' },
+  { code: '+254', flag: '🇰🇪', name: 'Kenia', country: 'KE' },
+  { code: '+62', flag: '🇮🇩', name: 'Indonesia', country: 'ID' },
+  { code: '+66', flag: '🇹🇭', name: 'Tailandia', country: 'TH' },
+  { code: '+84', flag: '🇻🇳', name: 'Vietnam', country: 'VN' },
+  { code: '+63', flag: '🇵🇭', name: 'Filipinas', country: 'PH' },
+  { code: '+64', flag: '🇳🇿', name: 'Nueva Zelanda', country: 'NZ' },
+  { code: '+46', flag: '🇸🇪', name: 'Suecia', country: 'SE' },
+  { code: '+47', flag: '🇳🇴', name: 'Noruega', country: 'NO' },
+  { code: '+45', flag: '🇩🇰', name: 'Dinamarca', country: 'DK' },
+  { code: '+358', flag: '🇫🇮', name: 'Finlandia', country: 'FI' },
+  { code: '+31', flag: '🇳🇱', name: 'Países Bajos', country: 'NL' },
+  { code: '+32', flag: '🇧🇪', name: 'Bélgica', country: 'BE' },
+  { code: '+41', flag: '🇨🇭', name: 'Suiza', country: 'CH' },
+  { code: '+43', flag: '🇦🇹', name: 'Austria', country: 'AT' },
+  { code: '+48', flag: '🇵🇱', name: 'Polonia', country: 'PL' },
+  { code: '+420', flag: '🇨🇿', name: 'Rep. Checa', country: 'CZ' },
+  { code: '+36', flag: '🇭🇺', name: 'Hungría', country: 'HU' },
+  { code: '+30', flag: '🇬🇷', name: 'Grecia', country: 'GR' },
+  { code: '+972', flag: '🇮🇱', name: 'Israel', country: 'IL' },
+  { code: '+98', flag: '🇮🇷', name: 'Irán', country: 'IR' },
+  { code: '+966', flag: '🇸🇦', name: 'Arabia Saudita', country: 'SA' },
+  { code: '+60', flag: '🇲🇾', name: 'Malasia', country: 'MY' },
+  { code: '+65', flag: '🇸🇬', name: 'Singapur', country: 'SG' },
+  { code: '+82', flag: '🇰🇷', name: 'Corea del Sur', country: 'KR' },
+  { code: '+886', flag: '🇹🇼', name: 'Taiwán', country: 'TW' },
+  { code: '+852', flag: '🇭🇰', name: 'Hong Kong', country: 'HK' },
+];
+
 function GateScreen({ onNext, resultado }: { 
   onNext: (data: { nombre: string; email: string; whatsapp: string; closers: string }) => void;
   resultado: DiagnosticoOutput;
 }) {
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
+  const [countryCode, setCountryCode] = useState('+52');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [closers, setClosers] = useState('Solo yo');
   const [loading, setLoading] = useState(false);
   
   const handleSubmit = async () => {
     if (!email || !nombre) return;
     setLoading(true);
+    // Combinar código de país + número
+    const fullWhatsapp = phoneNumber ? `${countryCode}${phoneNumber.replace(/\s/g, '')}` : '';
     await new Promise(r => setTimeout(r, 500));
-    onNext({ nombre, email, whatsapp, closers });
+    onNext({ nombre, email, whatsapp: fullWhatsapp, closers });
     setLoading(false);
   };
   
@@ -416,13 +486,27 @@ function GateScreen({ onNext, resultado }: {
           
           <div>
             <label className="text-[#B0C4D8] text-xs mb-1 block">WhatsApp</label>
-            <input
-              type="tel"
-              placeholder="+52 55 1234 5678"
-              value={whatsapp}
-              onChange={(e) => setWhatsapp(e.target.value)}
-              className="w-full px-4 py-3 bg-[rgba(255,255,255,0.04)] border border-[rgba(0,212,255,0.2)] rounded-xl text-white placeholder-[#6B8299] focus:border-[#3b82f6] focus:shadow-[0_0_0_3px_rgba(59,130,246,0.2)] outline-none transition-all"
-            />
+            <div className="flex gap-2">
+              <select
+                value={countryCode}
+                onChange={(e) => setCountryCode(e.target.value)}
+                className="px-3 py-3 bg-[rgba(255,255,255,0.04)] border border-[rgba(0,212,255,0.2)] rounded-xl text-white focus:border-[#3b82f6] outline-none transition-all text-sm"
+                style={{ minWidth: '130px' }}
+              >
+                {countryCodes.map((c) => (
+                  <option key={c.code} value={c.code} className="bg-[#1a1a2e] text-white">
+                    {c.flag} {c.code}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="tel"
+                placeholder="55 1234 5678"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value.replace(/[^0-9\s]/g, ''))}
+                className="flex-1 px-4 py-3 bg-[rgba(255,255,255,0.04)] border border-[rgba(0,212,255,0.2)] rounded-xl text-white placeholder-[#6B8299] focus:border-[#3b82f6] focus:shadow-[0_0_0_3px_rgba(59,130,246,0.2)] outline-none transition-all"
+              />
+            </div>
           </div>
           
           <div>
