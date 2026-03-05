@@ -112,7 +112,7 @@ function PreHeroScreen({ onNext }: { onNext: () => void }) {
         <div className="mb-6">
           <span className="inline-flex items-center gap-2 bg-[rgba(59,130,246,0.15)] border border-[rgba(59,130,246,0.3)] text-[#60a5fa] px-4 py-2 rounded-full text-sm font-medium">
             <span className="w-2 h-2 bg-[#00D084] rounded-full animate-pulse"></span>
-            847 infoproductores usaron esto esta semana
+            Diseñado para equipos de ventas de 1-3 closers
           </span>
         </div>
         
@@ -210,6 +210,7 @@ function CalculadoraScreen({ onNext, onInput }: {
   const [leads, setLeads] = useState(42);
   const [ticket, setTicket] = useState(6000);
   const [closingRate, setClosingRate] = useState(18);
+  const [facturacionMensual, setFacturacionMensual] = useState(50000);
   
   // Cálculo en tiempo real para el gráfico
   const resultado = useMemo(() => {
@@ -316,10 +317,23 @@ function CalculadoraScreen({ onNext, onInput }: {
               <span className="text-[#00D084]">Sistema completo: 35-45%</span>
             </div>
           </div>
+          
+          <div className="pt-4 border-t border-[rgba(255,255,255,0.1)]">
+            <label className="flex justify-between text-white font-medium mb-3 text-sm sm:text-base">
+              <span>¿Facturación mensual actual de tu negocio?</span>
+              <span className="text-[#00D4FF] font-bold">${facturacionMensual.toLocaleString()}</span>
+            </label>
+            <input
+              type="range" min="20000" max="200000" step="10000" value={facturacionMensual}
+              onChange={(e) => { const v = Number(e.target.value); setFacturacionMensual(v); onInput({ facturacionMensual: v }); }}
+              className="w-full"
+            />
+            <p className="text-[#6B8299] text-xs mt-2">Para calificar tu perfil de negocio (no afecta el cálculo del gap)</p>
+          </div>
         </div>
         
         <button
-          onClick={() => onNext({ leads, ticket, closingRate: closingRate / 100, closers: 'Solo yo' })}
+          onClick={() => onNext({ leads, ticket, closingRate: closingRate / 100, closers: 'Solo yo', facturacionMensual })}
           className="w-full mt-8 py-4 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white font-bold rounded-full text-lg hover:scale-[1.02] transition-all shadow-[0_0_40px_rgba(59,130,246,0.4)]"
         >
           Ver mi diagnóstico completo →
@@ -331,22 +345,24 @@ function CalculadoraScreen({ onNext, onInput }: {
 
 
 // ============================================
-// SCREEN 4: GATE PROGRESIVO (Solo email primero)
+// SCREEN 4: GATE UNIFICADO (Email + Datos en un paso)
 // ============================================
 
 function GateScreen({ onNext, resultado }: { 
   onNext: (data: { nombre: string; email: string; whatsapp: string; closers: string }) => void;
   resultado: DiagnosticoOutput;
 }) {
+  const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
+  const [closers, setClosers] = useState('Solo yo');
   const [loading, setLoading] = useState(false);
   
   const handleSubmit = async () => {
-    if (!email) return;
+    if (!email || !nombre) return;
     setLoading(true);
-    // Simular breve delay para UX
     await new Promise(r => setTimeout(r, 500));
-    onNext({ nombre: '', email, whatsapp: '', closers: 'Solo yo' });
+    onNext({ nombre, email, whatsapp, closers });
     setLoading(false);
   };
   
@@ -372,91 +388,46 @@ function GateScreen({ onNext, resultado }: {
         </div>
         
         <p className="text-[#B0C4D8] text-sm mb-4 text-center">
-          Para ver el análisis completo con el brief de ejemplo, ingresa tu email:
+          Completa tus datos para ver el diagnóstico completo con el brief de ejemplo:
         </p>
-        
-        <div className="space-y-4">
-          <input
-            type="email"
-            placeholder="tu@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-4 bg-[rgba(255,255,255,0.04)] border border-[rgba(0,212,255,0.2)] rounded-xl text-white placeholder-[#6B8299] focus:border-[#3b82f6] focus:shadow-[0_0_0_3px_rgba(59,130,246,0.2)] outline-none transition-all text-center"
-          />
-          
-          <button
-            onClick={handleSubmit}
-            disabled={!email || loading}
-            className="w-full py-4 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white font-bold rounded-full text-lg hover:scale-[1.02] transition-all shadow-[0_0_40px_rgba(59,130,246,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? 'Cargando...' : 'Ver mi diagnóstico completo →'}
-          </button>
-        </div>
-        
-        <p className="mt-4 text-[#6B8299] text-xs text-center">
-          🔒 Sin spam. Solo recibirás el diagnóstico.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-// ============================================
-// SCREEN 5: DATOS COMPLETOS (Gate extendido)
-// ============================================
-
-function CompleteDataScreen({ onNext, email }: { 
-  onNext: (data: { nombre: string; email: string; whatsapp: string; closers: string }) => void;
-  email: string;
-}) {
-  const [nombre, setNombre] = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
-  const [closers, setClosers] = useState('Solo yo');
-  const [wantPDF, setWantPDF] = useState(false);
-  
-  return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-      <GlowOrb color="purple" size={400} position={{ bottom: '-100px', left: '-100px' }} delay={1} />
-      
-      <div className="max-w-md w-full bg-gradient-to-br from-[rgba(59,130,246,0.1)] to-[rgba(139,92,246,0.05)] backdrop-blur-xl border border-[rgba(0,212,255,0.15)] rounded-[24px] p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative z-10">
-        <h2 className="text-xl font-bold text-white mb-4 text-center">Completa tu perfil</h2>
         
         <div className="space-y-4">
           <div>
-            <label className="text-[#B0C4D8] text-sm mb-2 block">Tu nombre</label>
+            <label className="text-[#B0C4D8] text-xs mb-1 block">Tu nombre *</label>
             <input
               type="text"
-              placeholder="Nombre"
+              placeholder="Ej: Carlos"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
-              className="w-full px-4 py-3 bg-[rgba(255,255,255,0.04)] border border-[rgba(0,212,255,0.15)] rounded-lg text-white placeholder-[#6B8299] focus:border-[#3b82f6] outline-none transition-all"
+              className="w-full px-4 py-3 bg-[rgba(255,255,255,0.04)] border border-[rgba(0,212,255,0.2)] rounded-xl text-white placeholder-[#6B8299] focus:border-[#3b82f6] focus:shadow-[0_0_0_3px_rgba(59,130,246,0.2)] outline-none transition-all"
             />
           </div>
           
           <div>
-            <label className="text-[#B0C4D8] text-sm mb-2 block">Email (confirmado)</label>
+            <label className="text-[#B0C4D8] text-xs mb-1 block">Email *</label>
             <input
               type="email"
+              placeholder="tu@email.com"
               value={email}
-              disabled
-              className="w-full px-4 py-3 bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.1)] rounded-lg text-[#6B8299] cursor-not-allowed"
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 bg-[rgba(255,255,255,0.04)] border border-[rgba(0,212,255,0.2)] rounded-xl text-white placeholder-[#6B8299] focus:border-[#3b82f6] focus:shadow-[0_0_0_3px_rgba(59,130,246,0.2)] outline-none transition-all"
             />
           </div>
           
           <div>
-            <label className="text-[#B0C4D8] text-sm mb-2 block">WhatsApp (opcional)</label>
+            <label className="text-[#B0C4D8] text-xs mb-1 block">WhatsApp (para enviarte el PDF)</label>
             <input
               type="tel"
-              placeholder="+54 11 1234 5678"
+              placeholder="+52 55 1234 5678"
               value={whatsapp}
               onChange={(e) => setWhatsapp(e.target.value)}
-              className="w-full px-4 py-3 bg-[rgba(255,255,255,0.04)] border border-[rgba(0,212,255,0.15)] rounded-lg text-white placeholder-[#6B8299] focus:border-[#3b82f6] outline-none transition-all"
+              className="w-full px-4 py-3 bg-[rgba(255,255,255,0.04)] border border-[rgba(0,212,255,0.2)] rounded-xl text-white placeholder-[#6B8299] focus:border-[#3b82f6] focus:shadow-[0_0_0_3px_rgba(59,130,246,0.2)] outline-none transition-all"
             />
-            <p className="text-[#6B8299] text-xs mt-1">Para enviarte el diagnóstico en PDF</p>
+            <p className="text-[#6B8299] text-xs mt-1">Preferido para equipos en LatAm</p>
           </div>
           
           <div>
-            <label className="text-[#B0C4D8] text-sm mb-2 block">Closers en tu equipo</label>
+            <label className="text-[#B0C4D8] text-xs mb-2 block">Closers en tu equipo</label>
             <div className="grid grid-cols-4 gap-2">
               {['Solo yo', '1 closer', '2-3', '4+'].map((opt) => (
                 <button
@@ -474,41 +445,36 @@ function CompleteDataScreen({ onNext, email }: {
             </div>
           </div>
           
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={wantPDF}
-              onChange={(e) => setWantPDF(e.target.checked)}
-              className="w-5 h-5 rounded border-[rgba(0,212,255,0.3)] bg-[rgba(255,255,255,0.04)] text-[#3b82f6] focus:ring-[#3b82f6]"
-            />
-            <span className="text-[#B0C4D8] text-sm">Quiero recibir el diagnóstico en PDF</span>
-          </label>
+          <button
+            onClick={handleSubmit}
+            disabled={!email || !nombre || loading}
+            className="w-full py-4 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white font-bold rounded-full text-lg hover:scale-[1.02] transition-all shadow-[0_0_40px_rgba(59,130,246,0.4)] disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+          >
+            {loading ? 'Cargando...' : 'Ver mi diagnóstico completo →'}
+          </button>
         </div>
         
-        <button
-          onClick={() => onNext({ nombre, email, whatsapp, closers })}
-          disabled={!nombre}
-          className="w-full mt-6 py-4 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white font-bold rounded-full text-lg hover:scale-[1.02] transition-all shadow-[0_0_40px_rgba(59,130,246,0.4)] disabled:opacity-50"
-        >
-          Continuar al diagnóstico →
-        </button>
+        <p className="mt-4 text-[#6B8299] text-xs text-center">
+          🔒 Sin spam. Solo recibirás el diagnóstico.
+        </p>
       </div>
     </div>
   );
 }
 
-
 // ============================================
-// SCREEN 6: DIAGNÓSTICO COMPLETO (Con todo)
+// SCREEN 5: DIAGNÓSTICO COMPLETO (Con personalización)
 // ============================================
 
 function DiagnosticoScreen({ 
   resultado, 
   input,
+  nombre,
   onNext 
 }: { 
   resultado: DiagnosticoOutput;
   input: DiagnosticoInput;
+  nombre: string;
   onNext: () => void;
 }) {
   const horasPorLlamada = 0.75; // 45 minutos
@@ -544,6 +510,11 @@ function DiagnosticoScreen({
           <span className="inline-flex items-center gap-2 bg-[rgba(255,56,96,0.15)] border border-[rgba(255,56,96,0.3)] text-[#FF3860] px-4 py-2 rounded-full text-sm font-medium">
             🔴 Revenue Gap Confirmado
           </span>
+          {nombre && (
+            <p className="text-white text-lg mt-4">
+              {nombre}, descubrimos cuánto deja tu equipo sobre la mesa
+            </p>
+          )}
         </div>
         
         {/* CARD PRINCIPAL */}
@@ -639,7 +610,7 @@ function DiagnosticoScreen({
             💡 Insight Oculto
           </h3>
           <p className="text-[#B0C4D8] text-sm leading-relaxed">
-            Basado en tus números, tu closer está hablando con <span className="text-white font-bold">{leadsSinPotencial} leads/mes</span> que NO deberían estar en sus llamadas.
+            {nombre ? `${nombre}, tu` : 'Tu'} closer está hablando con <span className="text-white font-bold">{leadsSinPotencial} leads/mes</span> que NO deberían estar en sus llamadas.
           </p>
           <p className="text-[#B0C4D8] text-sm mt-2 leading-relaxed">
             Si los filtraras ANTES, tu closer tendría tiempo para <span className="text-[#00D084] font-bold">{Math.round(leadsSinPotencial * 0.3)} llamadas más</span> con leads calificados.
@@ -682,8 +653,13 @@ function DiagnosticoScreen({
             <div className="flex justify-between"><span className="text-[#B0C4D8]">Revenue recuperable:</span> <span className="text-[#00D084] font-bold">{formatCurrency(resultado.revenueRecuperable)}</span></div>
             <div className="flex justify-between pt-2 border-t border-[rgba(251,191,36,0.2)]">
               <span className="text-[#fbbf24] font-semibold">ROI:</span>
-              <span className="text-[#fbbf24] font-bold text-2xl">{resultado.roiMultiplier}x</span>
+              <span className="text-[#fbbf24] font-bold text-2xl">{resultado.roiMultiplier}x{resultado.roiMultiplier >= 20 ? '+' : ''}</span>
             </div>
+          </div>
+          <div className="bg-[rgba(0,0,0,0.2)] rounded-lg p-3 mt-4 border border-[rgba(251,191,36,0.1)]">
+            <p className="text-[#fbbf24] text-xs">
+              ⚠️ Este ROI depende 100% de la ejecución de tu closer. El sistema entrega información, el cierre es responsabilidad de tu equipo.
+            </p>
           </div>
           <p className="text-[#6B8299] text-xs mt-3">⏱ Implementación: 7 días</p>
         </div>
@@ -709,10 +685,12 @@ function DiagnosticoScreen({
 
 function BriefPreviewScreen({ 
   brief, 
-  input 
+  input,
+  perfilCQ
 }: { 
   brief: GeneratedBrief | null;
   input: DiagnosticoInput;
+  perfilCQ?: string;
 }) {
   const [showBrief, setShowBrief] = useState(false);
   
@@ -751,9 +729,14 @@ function BriefPreviewScreen({
       <GlowOrb color="blue" size={600} position={{ top: '-200px', right: '-200px' }} />
       
       <div className="max-w-md mx-auto relative z-10">
-        <h2 className="text-xl font-bold text-white mb-6 text-center">
+        <h2 className="text-xl font-bold text-white mb-2 text-center">
           Así llegaría el brief a tu closer:
         </h2>
+        {perfilCQ && (
+          <p className="text-center text-[#6B8299] text-sm mb-6">
+            Perfil detectado: <span className="text-[#00D4FF] capitalize">{perfilCQ.replace('_', ' ')}</span>
+          </p>
+        )}
         
         {/* UI DE CHAT */}
         <div className="bg-[#0f0f1a] rounded-[24px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] border border-[rgba(255,255,255,0.05)]">
@@ -955,6 +938,7 @@ export default function DiagnosticPage() {
   const [result, setResult] = useState<DiagnosticoOutput | null>(null);
   const [brief, setBrief] = useState<GeneratedBrief | null>(null);
   const [email, setEmail] = useState('');
+  const [nombre, setNombre] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
   const handleNext = () => setScreen(s => s + 1);
@@ -966,25 +950,24 @@ export default function DiagnosticPage() {
     handleNext();
   };
   
-  const handleGateEmailSubmit = (emailValue: string) => {
-    setEmail(emailValue);
-    handleNext(); // Va a complete data screen
-  };
-  
-  const handleCompleteDataSubmit = async (data: { 
+  const handleGateSubmit = async (data: { 
     nombre: string; 
     email: string; 
     whatsapp: string; 
     closers: string;
   }) => {
     setIsLoading(true);
+    setNombre(data.nombre);
+    setEmail(data.email);
     
-    // Actualizar input con closers
+    // Actualizar input con closers y nombre
     const fullInput: DiagnosticoInput = {
       leads: input.leads || 42,
       ticket: input.ticket || 6000,
       closingRate: input.closingRate || 0.18,
       closers: data.closers,
+      facturacionMensual: input.facturacionMensual,
+      nombre: data.nombre,
     };
     setInput(fullInput);
     
@@ -992,9 +975,9 @@ export default function DiagnosticPage() {
     const calcResult = calculateRevenueGap(fullInput);
     setResult(calcResult);
     
-    // Capturar lead en backend
+    // Capturar lead en backend (con envío de WhatsApp/Email)
     try {
-      await fetch('/api/capture-lead', {
+      const response = await fetch('/api/capture-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1005,9 +988,23 @@ export default function DiagnosticPage() {
           leads: fullInput.leads,
           ticket: fullInput.ticket,
           closingRate: fullInput.closingRate,
+          facturacionMensual: fullInput.facturacionMensual,
           revenuePerdido: calcResult.revenuePerdido,
+          revenueRecuperable: calcResult.revenueRecuperable,
+          perfilCQ: calcResult.perfilCQ,
+          roiMultiplier: calcResult.roiMultiplier,
         }),
       });
+      
+      const result = await response.json();
+      console.log('Lead captured:', result);
+      
+      // Mostrar mensaje según el canal usado
+      if (result.whatsappStatus === 'sent') {
+        console.log('✅ WhatsApp enviado a', data.whatsapp);
+      } else if (result.emailStatus === 'sent') {
+        console.log('✅ Email enviado a', data.email);
+      }
     } catch (error) {
       console.error('Error capturing lead:', error);
     }
@@ -1069,30 +1066,26 @@ export default function DiagnosticPage() {
       )}
       {screen === 3 && result && (
         <GateScreen 
-          onNext={(data) => handleGateEmailSubmit(data.email)} 
+          onNext={handleGateSubmit} 
           resultado={result}
         />
       )}
-      {screen === 4 && (
-        <CompleteDataScreen 
-          onNext={handleCompleteDataSubmit}
-          email={email}
-        />
-      )}
-      {screen === 5 && result && input && (
+      {screen === 4 && result && input && (
         <DiagnosticoScreen 
           resultado={result} 
           input={input as DiagnosticoInput}
+          nombre={nombre}
           onNext={handleVerBrief}
         />
       )}
-      {screen === 6 && (
+      {screen === 5 && (
         <BriefPreviewScreen 
           brief={brief}
           input={input as DiagnosticoInput}
+          perfilCQ={result?.perfilCQ}
         />
       )}
-      {screen === 7 && result && (
+      {screen === 6 && result && (
         <CTAScreen revenuePerdido={result.revenuePerdido} />
       )}
     </main>

@@ -5,6 +5,8 @@ export interface DiagnosticoInput {
   ticket: number
   closingRate: number      // 0-1
   closers: string
+  facturacionMensual?: number  // Nuevo campo para calificación
+  nombre?: string              // Para personalización
 }
 
 export interface DiagnosticoOutput {
@@ -59,7 +61,9 @@ export function calculateRevenueGap(input: DiagnosticoInput): DiagnosticoOutput 
   const horasPerdidas = BENCHMARKS.horasPerdidas(leads, closingRate)
 
   const costoSistema = 500
-  const roiMultiplier = Math.round(revenueRecuperable / costoSistema)
+  const roiCalculado = Math.round(revenueRecuperable / costoSistema)
+  // Cap de ROI en 20x para evitar incredulidad con números muy altos
+  const roiMultiplier = Math.min(roiCalculado, 20)
 
   // Problema principal = el de mayor porcentaje
   const problemaPrincipal =
@@ -70,13 +74,13 @@ export function calculateRevenueGap(input: DiagnosticoInput): DiagnosticoOutput 
         : 'brief'
 
   // Perfil del Closing Cuántico asignado al lead
-  // (no al prospecto — al DUEÑO del negocio que hace el diagnóstico)
-  // Lógica: según combinación de ticket + closing rate + tamaño del equipo
+  // Lógica mejorada basada en closing rate actual + volumen + equipo
+  // Ahora es determinística y transparente para el usuario
   const perfilCQ: DiagnosticoOutput['perfilCQ'] =
-    ticket > 10000 && closingRate < 0.20 ? 'racional' :  // ticket alto, cierra poco → analiza mucho, inseguro
     closingRate < 0.15                   ? 'emocional' :  // cierra muy poco → impulsivo, sin sistema
-    closers === '4+'                      ? 'decisor'  :  // equipo grande → necesita consultar
-                                           'critico'      // closing rate medio → ya lo intentó antes
+    closingRate >= 0.15 && closingRate < 0.22 ? 'racional' :  // cierra poco pero consistente → analiza mucho
+    closers === '4+' || leads > 100      ? 'decisor'  :  // equipo grande o alto volumen → necesita consultar
+                                           'critico'      // closing rate medio-alto → ya lo intentó, es crítico
 
   return {
     revenueActual: Math.round(revenueActual),
