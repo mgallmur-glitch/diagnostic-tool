@@ -62,9 +62,10 @@ export async function POST(req: Request) {
           nombre,
           whatsapp,
           revenuePerdido,
-          perfilCQ,
-          closingRate,
-          ticket,
+          leads: leads || 42,
+          closers: closers || 'Solo yo',
+          ticket: ticket || 6000,
+          closingRate: closingRate || 0.18,
         })
       } catch (error) {
         console.error('Error enviando WhatsApp:', error)
@@ -116,55 +117,76 @@ async function enviarWhatsAppMaria({
   nombre,
   whatsapp,
   revenuePerdido,
-  perfilCQ,
-  closingRate,
+  leads,
+  closers,
   ticket,
+  closingRate,
 }: {
   leadId: string
   nombre: string
   whatsapp: string
   revenuePerdido: number
-  perfilCQ: string
-  closingRate: number
+  leads: number
+  closers: string
   ticket: number
+  closingRate: number
 }) {
   // Formatear número a E.164 (+51987654321)
   let numeroFormateado = whatsapp.replace(/[\s\-\(\)]/g, '')
   
-  // Si empieza con 00, reemplazar por +
   if (numeroFormateado.startsWith('00')) {
     numeroFormateado = '+' + numeroFormateado.slice(2)
   }
   
-  // Si no empieza con +, detectar país por prefijo o usar +51 (Perú por defecto para LatAm)
   if (!numeroFormateado.startsWith('+')) {
-    // Si empieza con 51 (Perú), 52 (México), 54 (Argentina), 57 (Colombia), etc.
     const prefijosLatam = ['51', '52', '54', '55', '56', '57', '58']
     const tienePrefijo = prefijosLatam.some(p => numeroFormateado.startsWith(p))
     
     if (tienePrefijo && numeroFormateado.length >= 11) {
-      // Ya tiene prefijo de país sin el +
       numeroFormateado = '+' + numeroFormateado
     } else {
-      // Asumir Perú por defecto si no tiene prefijo claro
       numeroFormateado = '+51' + numeroFormateado.replace(/^0/, '')
     }
   }
   
   const numeroFinal = numeroFormateado
 
-  // Construir mensaje según el perfil detectado
-  const mensajesPerfil: Record<string, string> = {
-    emocional: `¡Hola ${nombre}! 👋\n\nDetectamos que tu equipo deja **$${revenuePerdido.toLocaleString()} al mes** sobre la mesa por falta de información antes de las llamadas.\n\nCon un closing rate del ${Math.round(closingRate * 100)}% en tickets de $${ticket.toLocaleString()}, tienes potencial inmediato de mejora.\n\n¿Quieres que agendemos 30 minutos para mostrarte exactamente dónde está el gap? → https://calendly.com/mgallmur/45`,
-    
-    racional: `Hola ${nombre},\n\nBasado en tu diagnóstico:\n📊 Revenue Gap: $${revenuePerdido.toLocaleString()}/mes\n📈 Closing rate actual: ${Math.round(closingRate * 100)}%\n🎯 Potencial con sistema: 35%\n\nTu perfil (${perfilCQ}) indica que necesitas datos concretos antes de decidir. Aquí los tienes.\n\n¿Te gustaría ver el análisis completo en una llamada? → https://calendly.com/mgallmur/45`,
-    
-    critico: `${nombre},\n\nTu diagnóstico está listo.\n\nGap identificado: $${revenuePerdido.toLocaleString()}/mes\nProblema principal: Tu closer improvisa porque no tiene información del perfil del lead.\n\nNo es un problema de habilidad. Es un problema de sistema.\n\nSi quieres ver cómo se soluciona: https://calendly.com/mgallmur/45`,
-    
-    decisor: `Hola ${nombre},\n\nSegún tus números, estás perdiendo aproximadamente $${revenuePerdido.toLocaleString()} mensuales en oportunidades de cierre.\n\nEsto suele pasar cuando el equipo crece pero los procesos no escalan.\n\n¿Tienes 30 min esta semana para revisar cómo otros equipos de ${ticket >= 10000 ? 'high-ticket' : 'tu tamaño'} resolvieron esto? → https://calendly.com/mgallmur/45`,
+  // Revenue actual y potencial para contexto
+  const revenueActual = Math.round(leads * ticket * closingRate)
+  const revenuePotencial = Math.round(leads * ticket * 0.35)
+
+  // Variación del mensaje según tamaño de operación (NO perfil psicológico)
+  const getCloserLine = () => {
+    if (closers === 'Solo yo') {
+      return `Veo que tú mismo cierras — esto te libera para enfocarte solo en los leads que ya van a comprar.`
+    } else if (closers === '1 closer') {
+      return `Con un solo closer, cada llamada perdida duele doble en tu P&L.`
+    } else if (closers === '2-3') {
+      return `Con ${closers} closers, este sistema se convierte en un multiplicador de equipo.`
+    } else {
+      return `Con un equipo de closers, este sistema se convierte en un multiplicador inmediato.`
+    }
   }
 
-  const mensaje = mensajesPerfil[perfilCQ] || mensajesPerfil.critico
+  // Mensaje único con variables reales del ICP (NO perfil del Closing Cuántico)
+  const mensaje = `Hola ${nombre} 👋
+
+Acabo de revisar tu diagnóstico.
+
+Tus ${leads} leads del mes generan $${revenueActual.toLocaleString()} — pero podrían generar $${revenuePotencial.toLocaleString()}.
+
+${getCloserLine()}
+
+Esto es exactamente lo que tu closer recibiría 15 minutos antes de cada llamada:
+
+👤 Perfil del lead detectado
+🎯 Qué lo mueve a comprar  
+⚠️ Error crítico a evitar
+💬 Estrategia de apertura y cierre sugerida
+
+¿Quieres ver cómo se vería con tus leads reales?
+
+→ Agenda 30 min aquí: https://calendly.com/mgallmur/45`
 
   const response = await fetch(OPENCLAW_WEBHOOK_URL, {
     method: 'POST',
@@ -242,7 +264,6 @@ async function enviarEmailResend({
   if (error) {
     console.error('Resend error:', error)
     
-    // Registrar error
     if (supabase) {
       await supabase.from('envios').insert([{
         lead_id: leadId,
@@ -283,6 +304,8 @@ function generarEmailTemplate({
   perfilCQ: string
   roiMultiplier: number
 }) {
+  // Perfiles del Closing Cuántico - usados solo para el email
+  // (El Brief Preview sí usa estos perfiles como demo del producto)
   const perfiles: Record<string, { titulo: string; desc: string }> = {
     emocional: {
       titulo: 'El potencial está ahí, falta el sistema',
