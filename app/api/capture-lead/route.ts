@@ -164,16 +164,8 @@ async function enviarWhatsAppMaria({
   const revenueConSistema = formatUSD(revenueConSistemaNum)
   const gap = formatUSD(gapNum)
 
-  // FIX: Payload completo con campos de routing + datos del diagnóstico
+  // Payload exacto según especificación de OpenClaw
   const payload = {
-    // Campos de routing (requeridos por OpenClaw)
-    agentId: 'maria',
-    deliver: true,
-    channel: 'whatsapp',
-    to: numeroFinal,  // FIX: 'to' no 'phone'
-    wakeMode: 'now',
-    timeoutSeconds: 60,
-    // Datos del diagnóstico para el mensaje
     nombre,
     leads,
     ticket,
@@ -182,6 +174,7 @@ async function enviarWhatsAppMaria({
     revenueActual,
     revenueConSistema,
     gap,
+    phone: numeroFinal,
   }
 
   console.log('Enviando payload a OpenClaw:', JSON.stringify(payload, null, 2))
