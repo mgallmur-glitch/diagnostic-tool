@@ -3,6 +3,10 @@
 -- Ejecutar en SQL Editor de Supabase
 -- ============================================
 
+-- Eliminar políticas existentes si las hay (para evitar errores)
+DROP POLICY IF EXISTS "Allow insert from app" ON leads;
+DROP POLICY IF EXISTS "Allow select for admin" ON leads;
+
 -- Tabla principal de leads
 CREATE TABLE IF NOT EXISTS leads (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -49,6 +53,8 @@ CREATE POLICY "Allow select for admin" ON leads
 -- TABLA DE ENVÍOS (para tracking)
 -- ============================================
 
+DROP POLICY IF EXISTS "Allow insert envios" ON envios;
+
 CREATE TABLE IF NOT EXISTS envios (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   lead_id UUID REFERENCES leads(id) ON DELETE CASCADE,
@@ -60,11 +66,22 @@ CREATE TABLE IF NOT EXISTS envios (
 
 CREATE INDEX IF NOT EXISTS idx_envios_lead ON envios(lead_id);
 
+-- Política para envios
+ALTER TABLE envios ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow insert envios" ON envios
+  FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Allow select envios" ON envios
+  FOR SELECT USING (true);
+
 -- ============================================
 -- VIEW: Leads del día (para dashboard)
 -- ============================================
 
-CREATE OR REPLACE VIEW leads_hoy AS
+DROP VIEW IF EXISTS leads_hoy;
+
+CREATE VIEW leads_hoy AS
 SELECT 
   id,
   nombre,
