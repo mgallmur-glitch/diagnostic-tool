@@ -151,42 +151,30 @@ async function enviarWhatsAppMaria({
   
   const numeroFinal = numeroFormateado
 
-  // Revenue actual y potencial para contexto
-  const revenueActual = Math.round(leads * ticket * closingRate)
-  const revenuePotencial = Math.round(leads * ticket * 0.35)
+  // Calcular revenues
+  const revenueActualNum = Math.round(leads * ticket * closingRate)
+  const revenueConSistemaNum = Math.round(leads * ticket * 0.35)
+  
+  // Formatear a USD
+  const formatUSD = (num: number) => `$${num.toLocaleString('en-US')}`
+  const revenueActual = formatUSD(revenueActualNum)
+  const revenueConSistema = formatUSD(revenueConSistemaNum)
+  const gap = formatUSD(revenuePerdido)
 
-  // Variación del mensaje según tamaño de operación (NO perfil psicológico)
-  const getCloserLine = () => {
-    if (closers === 'Solo yo') {
-      return `Veo que tú mismo cierras — esto te libera para enfocarte solo en los leads que ya van a comprar.`
-    } else if (closers === '1 closer') {
-      return `Con un solo closer, cada llamada perdida duele doble en tu P&L.`
-    } else if (closers === '2-3') {
-      return `Con ${closers} closers, este sistema se convierte en un multiplicador de equipo.`
-    } else {
-      return `Con un equipo de closers, este sistema se convierte en un multiplicador inmediato.`
-    }
+  // Payload exacto que espera el webhook de María/OpenClaw
+  const payload = {
+    nombre,
+    leads,
+    ticket,
+    closingRate: Math.round(closingRate * 100), // Convertir a porcentaje (18% no 0.18)
+    closers,
+    revenueActual,
+    revenueConSistema,
+    gap,
+    phone: numeroFinal,
   }
 
-  // Mensaje único con variables reales del ICP (NO perfil del Closing Cuántico)
-  const mensaje = `Hola ${nombre} 👋
-
-Acabo de revisar tu diagnóstico.
-
-Tus ${leads} leads del mes generan $${revenueActual.toLocaleString()} — pero podrían generar $${revenuePotencial.toLocaleString()}.
-
-${getCloserLine()}
-
-Esto es exactamente lo que tu closer recibiría 15 minutos antes de cada llamada:
-
-👤 Perfil del lead detectado
-🎯 Qué lo mueve a comprar  
-⚠️ Error crítico a evitar
-💬 Estrategia de apertura y cierre sugerida
-
-¿Quieres ver cómo se vería con tus leads reales?
-
-→ Agenda 30 min aquí: https://calendly.com/mgallmur/45`
+  console.log('Enviando payload a OpenClaw:', JSON.stringify(payload, null, 2))
 
   const response = await fetch(OPENCLAW_WEBHOOK_URL, {
     method: 'POST',
@@ -194,15 +182,7 @@ Esto es exactamente lo que tu closer recibiría 15 minutos antes de cada llamada
       'Authorization': `Bearer ${OPENCLAW_WEBHOOK_TOKEN}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      message: mensaje,
-      agentId: 'maria',
-      deliver: true,
-      channel: 'whatsapp',
-      to: numeroFinal,
-      wakeMode: 'now',
-      timeoutSeconds: 60,
-    }),
+    body: JSON.stringify(payload),
   })
 
   if (!response.ok) {
