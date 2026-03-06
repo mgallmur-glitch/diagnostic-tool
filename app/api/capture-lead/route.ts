@@ -246,7 +246,7 @@ async function enviarEmailResend({
   }
 
   const { data, error } = await resend.emails.send({
-    from: 'The Closing Code <hola@theclosingcode.ai>',
+    from: 'María de The Closing Code AI <diagnostico@send.closingcodeai.online>',
     to: email,
     subject: `${nombre}, tu equipo deja $${revenuePerdido.toLocaleString()}/mes sobre la mesa`,
     html: generarEmailTemplate({
