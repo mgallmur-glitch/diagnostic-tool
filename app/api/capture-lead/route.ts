@@ -75,7 +75,16 @@ export async function POST(req: Request) {
 
     // 3. ENVIAR EMAIL (si no se envió WhatsApp o como backup)
     let emailStatus = 'skipped'
+    console.log('Evaluando envío de email:', { 
+      hasWhatsapp: !!whatsapp, 
+      whatsappLength: whatsapp?.length, 
+      whatsappStatus,
+      shouldSendEmail: !whatsapp || whatsappStatus !== 'sent',
+      resendConfigured: !!resend 
+    })
+    
     if (!whatsapp || whatsappStatus !== 'sent') {
+      console.log('Enviando email fallback a:', email)
       try {
         emailStatus = await enviarEmailResend({
           leadId: lead.id,
@@ -86,10 +95,13 @@ export async function POST(req: Request) {
           perfilCQ,
           roiMultiplier,
         })
+        console.log('Email enviado exitosamente:', emailStatus)
       } catch (error) {
         console.error('Error enviando email:', error)
         emailStatus = 'error'
       }
+    } else {
+      console.log('Email skipped - WhatsApp enviado correctamente')
     }
 
     return NextResponse.json({
@@ -240,8 +252,14 @@ async function enviarEmailResend({
   perfilCQ: string
   roiMultiplier: number
 }) {
+  console.log('Iniciando envío de email via Resend:', { 
+    to: email, 
+    resendInstance: !!resend,
+    apiKeyConfigured: !!process.env.RESEND_API_KEY 
+  })
+  
   if (!resend) {
-    console.warn('RESEND no configurado')
+    console.warn('RESEND no configurado - API Key missing')
     return 'skipped_no_key'
   }
 
